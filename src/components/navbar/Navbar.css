@@ -2,7 +2,7 @@
     background-color: #003580;
     height: 90px;
     display: flex;
-    padding: 0px 300px;
+    padding: 0px 100px;
 }
 .navbar-left{
     flex: 1;
@@ -17,10 +17,10 @@
     align-items: center;
 }
 .navbar-btn{
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100px;
-    height: 50%;
+    width: 80px;
+    height: 30%;
     margin-left: 15px;
     color: #003580;
     cursor: pointer;

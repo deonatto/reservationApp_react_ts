@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './Home.css';
 import Navbar from '../../components/navbar/Navbar';
+import Header from '../../components/header/Header';
 
 const Home: React.FC = () => {
   return (
-    <Navbar/>
+    <Fragment>
+        <Navbar/>
+        <Header/>
+    </Fragment>
   )
 }
 
