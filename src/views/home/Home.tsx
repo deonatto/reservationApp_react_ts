@@ -1,9 +1,10 @@
 import React from 'react';
 import './Home.css';
+import Navbar from '../../components/navbar/Navbar';
 
 const Home: React.FC = () => {
   return (
-    <div>Home</div>
+    <Navbar/>
   )
 }
 
