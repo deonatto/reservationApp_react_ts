@@ -5,6 +5,7 @@ import Header from '../../components/header/Header';
 import Features from '../../components/features/Features';
 import PropertyList from '../../components/propertyList/PropertyList';
 import HomesList from '../../components/homesList/HomesList';
+import Footer from '../../components/footer/Footer';
 
 const Home: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const Home: React.FC = () => {
           <h2 className='home-title'>Home guests love</h2>
           <HomesList />
         </div>
+        <Footer/>
     </Fragment>
   )
 }
