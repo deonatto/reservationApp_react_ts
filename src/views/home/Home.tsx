@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import Header from '../../components/header/Header';
 import Features from '../../components/features/Features';
 import PropertyList from '../../components/propertyList/PropertyList';
+import HomesList from '../../components/homesList/HomesList';
 
 const Home: React.FC = () => {
   return (
@@ -14,6 +15,8 @@ const Home: React.FC = () => {
           <Features/>
           <h2 className='home-title'>Browse by property type</h2>
           <PropertyList/>
+          <h2 className='home-title'>Home guests love</h2>
+          <HomesList />
         </div>
     </Fragment>
   )
