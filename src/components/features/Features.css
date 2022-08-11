@@ -1,0 +1,24 @@
+.featured-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.featured-item {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  padding: 0px 10px;
+}
+.featured-img {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.featured-titles {
+  width: calc(100% - 20px);
+  position: absolute;
+  color: white;
+  bottom: 20px;
+  text-align: center;
+}
