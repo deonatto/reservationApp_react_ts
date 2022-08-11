@@ -10,6 +10,7 @@
     padding: 0;
     align-items: center;
     list-style: none;
+    padding-bottom: 5px;
 }
 .category{
     padding: 8px 15px;
@@ -77,4 +78,37 @@
 .date-picker{
     position: absolute;
     top: 43px;
+}
+.header-options{
+    width: 180px;
+    position: absolute;
+    top: 43px;
+    background-color: white;
+    color: gray;
+    box-shadow: 0px 0px 5px 3px darkgray;
+}
+.header-option-item{
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.header-option-text{
+    width: 40%;
+}
+.header-counter-container{
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.header-counter-btn{
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border: 1px solid #0071c2;
+}
+.header-counter-number{
+    padding: 0px 5px;
 }
