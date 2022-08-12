@@ -13,15 +13,19 @@ import React, { Fragment, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import {Options} from '../../types/types';
 
 interface HeaderProps {
   type?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ type }) => {
+  const navigate = useNavigate();
+  const [destination, setDestination] = useState('');
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [optionsPickerIsOpen, setOptionsPickerIsOpen] = useState(false);
-  const [optionsPicker, setOptionsPicker] = useState({
+  const [optionsPicker, setOptionsPicker] = useState<Options>({
     adult: 0,
     children: 0,
     room: 0,
@@ -84,6 +88,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     }
   };
 
+  const handleSearch = () => {
+    navigate("/hotels", {state:{destination, date:formatDate(date[0].startDate, date[0].endDate), optionsPicker}})
+  };
+
   return (
     <div className="header-container">
       <ul className="categories-list">
@@ -108,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           Airport taxis
         </li>
       </ul>
-      {type !== 'list' && (
+      {type !== "list" && (
         <Fragment>
           <h1 className="header-title">A lifetime of discounts? It´s Genius</h1>
           <p className="header-text">
@@ -123,6 +131,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
                 type="text"
                 placeholder="where are you goin?"
                 className="header-search-input"
+                onChange={(e)=> setDestination(e.target.value)}
               />
             </div>
             <div className="header-search-item">
@@ -140,6 +149,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
                   onChange={(item) => setDate([item.selection])}
                   moveRangeOnFirstSelection={false}
                   ranges={date}
+                  minDate={new Date()}
                   className="date-picker"
                 />
               )}
@@ -221,7 +231,9 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
               )}
             </div>
             <div className="header-search-item">
-              <button className="header-search-btn">Search</button>
+              <button className="header-search-btn" onClick={handleSearch}>
+                Search
+              </button>
             </div>
           </div>
         </Fragment>
