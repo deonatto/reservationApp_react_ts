@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
-import "./List.css";
+import "./Hotels.css";
 import { Options } from "../../types/types";
 import SearchItem from "../../components/searchItem/SearchItem";
 
@@ -11,7 +11,7 @@ interface StateProps {
   optionsPicker: Options;
 }
 
-const List = () => {
+const Hotels = () => {
   const data = useLocation().state as StateProps;
   console.log(data);
 
@@ -81,4 +81,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default Hotels;
