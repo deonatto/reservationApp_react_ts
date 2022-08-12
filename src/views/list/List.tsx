@@ -3,6 +3,7 @@ import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import "./List.css";
 import { Options } from "../../types/types";
+import SearchItem from "../../components/searchItem/SearchItem";
 
 interface StateProps {
   date: string;
@@ -63,7 +64,17 @@ const List = () => {
             </div>
             <button>Seach</button>
           </div>
-          <div className="list-result"></div>
+          <div className="list-result">
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+          </div>
         </div>
       </div>
     </div>
