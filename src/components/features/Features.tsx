@@ -1,6 +1,9 @@
-import React from "react";
+import useFeatures from '../../hooks/useFeatures';
 import './Features.css';
 const Features = () => {
+  //custom hook to get count of properties in Berlin, london and madrid
+  const {data,loading, error} = useFeatures();
+
   return (
     <div className="featured-container">
       <div className="featured-item">
@@ -10,8 +13,8 @@ const Features = () => {
           className="featured-img"
         />
         <div className="featured-titles">
-          <h1>Dublin</h1>
-          <h2>123 properties</h2>
+          <h1>Berlin</h1>
+          <h2></h2>
         </div>
       </div>
       <div className="featured-item">
@@ -21,7 +24,7 @@ const Features = () => {
           className="featured-img"
         />
         <div className="featured-titles">
-          <h1>Reno</h1>
+          <h1>Madrid</h1>
           <h2>533 properties</h2>
         </div>
       </div>
@@ -32,7 +35,7 @@ const Features = () => {
           className="featured-img"
         />
         <div className="featured-titles">
-          <h1>Austin</h1>
+          <h1>London</h1>
           <h2>532 properties</h2>
         </div>
       </div>
