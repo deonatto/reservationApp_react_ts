@@ -1,4 +1,8 @@
-.featured-container {
+.featured-container{
+  width: 100%;
+  text-align: center;
+}
+.featured-wrapper {
   width: 100%;
   display: flex;
   justify-content: space-between;
