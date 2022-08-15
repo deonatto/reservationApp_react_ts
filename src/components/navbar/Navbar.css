@@ -26,3 +26,7 @@
     cursor: pointer;
     border: none;
 }
+.link{
+    text-decoration: none;
+    color: inherit;
+}

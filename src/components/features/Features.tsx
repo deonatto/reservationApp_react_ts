@@ -1,9 +1,9 @@
-import useFeatures from "../../hooks/useFeatures";
+import useProperties from "../../hooks/useProperties";
 import "./Features.css";
 
 const Features: React.FC = () => {
   //custom hook to get count of properties in Berlin, london and madrid
-  const { data, error } = useFeatures();
+  const { data, error } = useProperties();
 
   return (
     <div className="featured-container">
