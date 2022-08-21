@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-
+import { Hotel } from "../types/types";
 
 export default function useFavoriteHotels() {
-  const [data, setData] = useState<[]>([]);
+  const [data, setData] = useState<Hotel[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -13,7 +12,6 @@ export default function useFavoriteHotels() {
         const res = await axios.get(
           `http://localhost:8800/api/hotels?featured=true&limit=4`
         );
-        console.log(res);
         setData(res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
