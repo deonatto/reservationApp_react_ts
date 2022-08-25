@@ -4,6 +4,8 @@ import Navbar from "../../components/navbar/Navbar";
 import "./Hotels.css";
 import { Options } from "../../types/types";
 import SearchItem from "../../components/searchItem/SearchItem";
+import useDestination from "../../hooks/useDestination";
+import { useState } from "react";
 
 interface StateProps {
   date: string;
@@ -11,10 +13,17 @@ interface StateProps {
   optionsPicker: Options;
 }
 
-const Hotels = () => {
-  const data = useLocation().state as StateProps;
-  console.log(data);
+const Hotels: React.FC = () => {
+  const useLocationProps = useLocation().state as StateProps;
+  const [destination, setDestination] = useState(useLocationProps.destination);
+  const [date, setDate] = useState(useLocationProps.date);
+  const { data, error } = useDestination(destination);
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
 
+  const handleClick = () =>{
+    
+  }
   return (
     <div>
       <Navbar />
@@ -25,15 +34,13 @@ const Hotels = () => {
             <h2 className="list-search-title">Search</h2>
             <div className="list-search-item">
               <label htmlFor="destination">Destination</label>
-              <input
-                type="text"
-                id="destination"
-                placeholder={data.destination}
-              />
+              <input type="text" id="destination" placeholder={destination} />
             </div>
             <div className="list-search-item">
               <label htmlFor="check-in">Check-in Date</label>
-              <p id="check-in" className="item-date">{data.date}</p>
+              <p id="check-in" className="item-date">
+                {date}
+              </p>
             </div>
             <div className="list-search-item">
               <h3>Options</h3>
@@ -41,13 +48,13 @@ const Hotels = () => {
                 <p className="option-text">
                   Min price <small>per night</small>
                 </p>
-                <input type="number" className="option-input" />
+                <input type="number" className="option-input" onChange={(e) => setMin(e.target.value)}/>
               </div>
               <div className="search-item-option">
                 <p className="option-text">
                   Max price <small>per night</small>
                 </p>
-                <input type="number" className="option-input" />
+                <input type="number" className="option-input" onChange={(e) => setMax(e.target.value)}/>
               </div>
               <div className="search-item-option">
                 <p className="option-text">Adults</p>
@@ -62,18 +69,12 @@ const Hotels = () => {
                 <input type="number" className="option-input" />
               </div>
             </div>
-            <button>Seach</button>
+            <button onClick={handleClick}>Seach</button>
           </div>
           <div className="list-result">
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
+            {error
+              ? error
+              : data.map((item) => <SearchItem key={item._id} item={item} />)}
           </div>
         </div>
       </div>
