@@ -1,10 +1,11 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
-import './Hotel.css';
+import "./Hotel.css";
+import useHotel from "../../hooks/useHotel";
 
 const Hotel = () => {
   const photos = [
@@ -27,58 +28,57 @@ const Hotel = () => {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
     },
   ];
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const { data, error } = useHotel(id);
   return (
     <div>
       <Navbar />
-      <Header type="list"/>
-      <div className="hotel-container">
-        <div className="hotel-wrapper">
-          <h1 className="hotel-title">Grand Hotel</h1>
-          <div className="hotel-address">
-            <FontAwesomeIcon icon={faLocationDot}/>
-            <p>Elton St 125 New york</p>
-          </div>
-          <p className="hotel-info">Excellent location - 500m from center</p>
-          <p className="hotel-info">Book a stay over $114 at this property and get a free airport taxi</p>
-          <div className="hotel-imgs">
-            {photos.map((photo,index)=>(
-              <div className="hotel-img-container" key={index}>
-                <img src={photo.src} className="hotel-img" alt=""/>
-              </div>
-            ))}
-          </div>
-          <div className="hotel-details">
-            <div className="hotel-details-texts">
-              <h2>Stay in the heart of City</h2>
-              <p className="hotel-desc">
-                Located a 5-minute walk from St. Florian's Gate in Krakow, Tower
-                Street Apartments has accommodations with air conditioning and
-                free WiFi. The units come with hardwood floors and feature a
-                fully equipped kitchenette with a microwave, a flat-screen TV,
-                and a private bathroom with shower and a hairdryer. A fridge is
-                also offered, as well as an electric tea pot and a coffee
-                machine. Popular points of interest near the apartment include
-                Cloth Hall, Main Market Square and Town Hall Tower. The nearest
-                airport is John Paul II International Kraków–Balice, 16.1 km
-                from Tower Street Apartments, and the property offers a paid
-                airport shuttle service.
-              </p>
+      <Header type="list" />
+      {error ? (
+        error
+      ) : data && (
+        <div className="hotel-container">
+          <div className="hotel-wrapper">
+            <h1 className="hotel-title">{data.name}</h1>
+            <div className="hotel-address">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <p>{data.address}</p>
             </div>
-            <div className="hotel-price">
-              <h2>Perfect for a 9-night stay!</h2>
-              <p>
-                Located in the real heart of Krakow, this property has an
-                excellent location score of 9.8!
-              </p>
-              <h3>
-                <b>$945</b> (9 nights)
-              </h3>
-              <button>Reserve or Book Now!</button>
+            <p className="hotel-info">Excellent location - {data.distance}m from center</p>
+            <p className="hotel-info">
+              Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
+            </p>
+            <div className="hotel-imgs">
+              {data.photos.map((photo, index) => (
+                <div className="hotel-img-container" key={index}>
+                  <img src={photo} className="hotel-img" alt="" />
+                </div>
+              ))}
+            </div>
+            <div className="hotel-details">
+              <div className="hotel-details-texts">
+                <h2>{data.title}</h2>
+                <p className="hotel-desc">
+                  {data.desc}
+                </p>
+              </div>
+              <div className="hotel-price">
+                <h2>Perfect for a 9-night stay!</h2>
+                <p>
+                  Located in the real heart of Krakow, this property has an
+                  excellent location score of 9.8!
+                </p>
+                <h3>
+                  <b>$945</b> (9 nights)
+                </h3>
+                <button>Reserve or Book Now!</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer/>
+      )}
+      <Footer />
     </div>
   );
 };

@@ -10,7 +10,7 @@ const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
   return (
     <div className="search-item-container">
       <img
-        src="https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"
+        src={item.photos[0]}
         alt=""
         className="search-item-img"
       />
@@ -33,7 +33,7 @@ const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
         <div className="search-item-detail">
           <p className="search-item-price">${item.cheapestPrice}</p>
           <p className="search-item-tax">Includes taxes and fees</p>
-          <Link to={`/hotels/${item._id}`}>
+          <Link to={`/hotel/${item._id}`}>
             <button className="search-item-button">See availability</button>
           </Link>
         </div>

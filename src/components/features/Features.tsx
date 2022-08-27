@@ -4,7 +4,6 @@ import "./Features.css";
 const Features: React.FC = () => {
   //custom hook to get count of properties in Berlin, london and madrid
   const { data, error } = useProperties();
-
   return (
     <div className="featured-container">
       {error ? (

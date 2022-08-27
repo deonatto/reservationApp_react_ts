@@ -17,12 +17,14 @@ const Hotels: React.FC = () => {
   const useLocationProps = useLocation().state as StateProps;
   const [destination, setDestination] = useState(useLocationProps.destination);
   const [date, setDate] = useState(useLocationProps.date);
-  const { data, error } = useDestination(destination);
+  const [options, setOption] = useState(useLocationProps.optionsPicker);
   const [min, setMin] = useState('');
   const [max, setMax] = useState('');
+  const [url, setUrl] = useState(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`)
+  const { data, error } = useDestination(url);
 
   const handleClick = () =>{
-    
+    setUrl(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${min}&max=${max}`)
   }
   return (
     <div>
@@ -34,7 +36,7 @@ const Hotels: React.FC = () => {
             <h2 className="list-search-title">Search</h2>
             <div className="list-search-item">
               <label htmlFor="destination">Destination</label>
-              <input type="text" id="destination" placeholder={destination} />
+              <input type="text" id="destination" onChange={(e) => setDestination(e.target.value)} placeholder={destination} />
             </div>
             <div className="list-search-item">
               <label htmlFor="check-in">Check-in Date</label>
@@ -58,15 +60,15 @@ const Hotels: React.FC = () => {
               </div>
               <div className="search-item-option">
                 <p className="option-text">Adults</p>
-                <input type="number" className="option-input" />
+                <input type="number" className="option-input" placeholder={String(options.adult)}/>
               </div>
               <div className="search-item-option">
                 <p className="option-text">Childrens</p>
-                <input type="number" className="option-input" />
+                <input type="number" className="option-input" placeholder={String(options.children)}/>
               </div>
               <div className="search-item-option">
                 <p className="option-text">Rooms</p>
-                <input type="number" className="option-input" />
+                <input type="number" className="option-input" placeholder={String(options.room)}/>
               </div>
             </div>
             <button onClick={handleClick}>Seach</button>

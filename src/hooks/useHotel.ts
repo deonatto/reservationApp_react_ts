@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Hotel } from "../types/types";
 
-export default function useDestination(url:string) {
-  const [data, setData] = useState<Hotel[]>([]);
+export default function useHotel(id:string) {
+  const [data, setData] = useState<Hotel>();
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fechData = async () => {
       try {
         const res = await axios.get(
-          url
+          `http://localhost:8800/api/hotels/find/${id}`
         );
         setData(res.data);
       } catch (err) {
@@ -20,6 +20,6 @@ export default function useDestination(url:string) {
       }
     };
     fechData();
-  }, [url]);
+  }, [id]);
   return { data, error };
 }
