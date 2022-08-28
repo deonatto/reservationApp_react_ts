@@ -6,6 +6,7 @@ import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import "./Hotel.css";
 import useHotel from "../../hooks/useHotel";
+import { useAppSelector } from "../../redux/hooks";
 
 const Hotel = () => {
   const photos = [
@@ -30,54 +31,72 @@ const Hotel = () => {
   ];
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  const { dates, options } = useAppSelector((state) => state.searchOptions);
   const { data, error } = useHotel(id);
+  const milisecondsPerDay = 1000 * 60 * 60 * 24;
+  //calculate difference (in days) between dates
+  const dayDifference = (dates: string) => {
+    let difference = 0;
+    if (dates) {
+      const datesArray = dates.split("to");
+      const timeDiff = Math.abs(
+        new Date(datesArray[1]).getTime() - new Date(datesArray[0]).getTime()
+      );
+      difference = Math.ceil(timeDiff / milisecondsPerDay);
+    }
+
+    return difference;
+  };
+  const days = dayDifference(dates);
   return (
     <div>
       <Navbar />
       <Header type="list" />
-      {error ? (
-        error
-      ) : data && (
-        <div className="hotel-container">
-          <div className="hotel-wrapper">
-            <h1 className="hotel-title">{data.name}</h1>
-            <div className="hotel-address">
-              <FontAwesomeIcon icon={faLocationDot} />
-              <p>{data.address}</p>
-            </div>
-            <p className="hotel-info">Excellent location - {data.distance}m from center</p>
-            <p className="hotel-info">
-              Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
-            </p>
-            <div className="hotel-imgs">
-              {data.photos.map((photo, index) => (
-                <div className="hotel-img-container" key={index}>
-                  <img src={photo} className="hotel-img" alt="" />
+      {error
+        ? error
+        : data && (
+            <div className="hotel-container">
+              <div className="hotel-wrapper">
+                <h1 className="hotel-title">{data.name}</h1>
+                <div className="hotel-address">
+                  <FontAwesomeIcon icon={faLocationDot} />
+                  <p>{data.address}</p>
                 </div>
-              ))}
-            </div>
-            <div className="hotel-details">
-              <div className="hotel-details-texts">
-                <h2>{data.title}</h2>
-                <p className="hotel-desc">
-                  {data.desc}
+                <p className="hotel-info">
+                  Excellent location - {data.distance}m from center
                 </p>
-              </div>
-              <div className="hotel-price">
-                <h2>Perfect for a 9-night stay!</h2>
-                <p>
-                  Located in the real heart of Krakow, this property has an
-                  excellent location score of 9.8!
+                <p className="hotel-info">
+                  Book a stay over ${data.cheapestPrice} at this property and
+                  get a free airport taxi
                 </p>
-                <h3>
-                  <b>$945</b> (9 nights)
-                </h3>
-                <button>Reserve or Book Now!</button>
+                <div className="hotel-imgs">
+                  {data.photos.map((photo, index) => (
+                    <div className="hotel-img-container" key={index}>
+                      <img src={photo} className="hotel-img" alt="" />
+                    </div>
+                  ))}
+                </div>
+                <div className="hotel-details">
+                  <div className="hotel-details-texts">
+                    <h2>{data.title}</h2>
+                    <p className="hotel-desc">{data.desc}</p>
+                  </div>
+                  <div className="hotel-price">
+                    <h2>Perfect for a {days}-night stay!</h2>
+                    <p>
+                      Located in the real heart of Krakow, this property has an
+                      excellent location score of 9.8!
+                    </p>
+                    <h3>
+                      <b>${days * data.cheapestPrice * options.room}</b> ({days}
+                      nights)
+                    </h3>
+                    <button>Reserve or Book Now!</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
       <Footer />
     </div>
   );

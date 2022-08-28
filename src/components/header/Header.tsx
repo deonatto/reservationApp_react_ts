@@ -15,13 +15,15 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {Options} from '../../types/types';
-
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { searchOptionsActions } from "../../redux/searchOptions";
 interface HeaderProps {
   type?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ type }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [destination, setDestination] = useState('');
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [optionsPickerIsOpen, setOptionsPickerIsOpen] = useState(false);
@@ -89,6 +91,11 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   };
 
   const handleSearch = () => {
+    dispatch(searchOptionsActions.newSearch({
+      city: destination, 
+      dates: formatDate(date[0].startDate, date[0].endDate), 
+      options: optionsPicker
+    }))
     navigate("/hotels", {state:{destination, date:formatDate(date[0].startDate, date[0].endDate), optionsPicker}})
   };
 

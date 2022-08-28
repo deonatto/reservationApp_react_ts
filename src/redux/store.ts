@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import hotelReducer from "./hotels";
+import searchOptionsReducer from "./searchOptions";
+import authReducer from './auth';
 import {
   persistReducer,
   FLUSH,
@@ -17,7 +18,8 @@ const persistConfig = {
   storage,
 };
 const rootReducer = combineReducers({ 
-    hotel: hotelReducer,
+    searchOptions: searchOptionsReducer,
+    auth: authReducer
   })
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
