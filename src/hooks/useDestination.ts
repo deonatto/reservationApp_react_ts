@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { Hotel } from "../types/types";
 
 export default function useDestination(url:string) {
@@ -13,7 +13,7 @@ export default function useDestination(url:string) {
           url
         );
         setData(res.data);
-      } catch (err) {
+      } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           setError(err.message);
         }

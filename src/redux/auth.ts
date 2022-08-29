@@ -1,37 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Options } from "../types/types";
+import { User } from "../types/types";
 
 interface AuthState {
-  city: string;
-  dates: string;
-  options: Options;
+  user: string;
+  loading: boolean;
+  error: string;
 }
 const initialState: AuthState = {
-  city: "",
-  dates: "",
-  options: {
-    adult: 0,
-    children: 0,
-    room: 0,
-  },
+  user: '',
+  loading: false,
+  error: ''
 };
 const authSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    newSearch(state, action: PayloadAction<AuthState>){
-      state.city = action.payload.city;
-      state.dates = action.payload.dates;
-      state.options = action.payload.options
+    login(state, action: PayloadAction<AuthState>){
+      
     },
-    resetSearch(state){
-      state.city = '';
-      state.dates = '';
-      state.options = {
-        adult: 0,
-        children: 0,
-        room: 0
-      }
+    login_success(){
+
+    },
+    login_failure(){
+
+    },
+    logout(state){
+      state.user= ''
+      state.loading= false;
+      state.error='';
     }
   },
 });

@@ -17,7 +17,7 @@ export default function useTypes() {
           `http://localhost:8800/api/hotels/countByType`
         );
         setData(res.data);
-      } catch (err) {
+      } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           setError(err.message);
         }

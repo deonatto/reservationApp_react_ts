@@ -12,7 +12,7 @@ export default function useProperties() {
           `http://localhost:8800/api/hotels/countByCity?cities=berlin,madrid,london`
         );
         setData(res.data);
-      } catch (err) {
+      } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           setError(err.message);
         }

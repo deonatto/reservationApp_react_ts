@@ -19,3 +19,8 @@ export interface Hotel {
   __v: number;
   _id: number;
 }
+
+export interface User{
+  username: string,
+  password: string
+}

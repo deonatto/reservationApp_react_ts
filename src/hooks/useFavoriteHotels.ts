@@ -13,7 +13,7 @@ export default function useFavoriteHotels() {
           `http://localhost:8800/api/hotels?featured=true&limit=4`
         );
         setData(res.data);
-      } catch (err) {
+      } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           setError(err.message);
         }
