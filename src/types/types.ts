@@ -22,5 +22,17 @@ export interface Hotel {
 
 export interface User{
   username: string,
-  password: string
+  city: string,
+  country:string,
+  createdAt: string,
+  email: string,
+  phone: string,
+  updatedAt:string,
+}
+
+export interface ErrorResponse {
+  message: string;
+  stack: string;
+  status: number;
+  success: boolean;
 }

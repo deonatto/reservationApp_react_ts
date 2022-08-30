@@ -2,33 +2,41 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../types/types";
 
 interface AuthState {
-  user: string;
-  loading: boolean;
-  error: string;
+  user: User;
+  loggedIn: boolean;
 }
 const initialState: AuthState = {
-  user: '',
-  loading: false,
-  error: ''
+  user: {
+    username: "",
+    city: "",
+    country: "",
+    createdAt: "",
+    email: "",
+    phone: "",
+    updatedAt: "",
+  },
+  loggedIn: false,
 };
 const authSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    login(state, action: PayloadAction<AuthState>){
-      
+    login(state, action: PayloadAction<User>) {
+      state.user = {...action.payload};
+      state.loggedIn = true;
     },
-    login_success(){
-
+    logout(state) {
+      state.user = {
+        username: "",
+        city: "",
+        country: "",
+        createdAt: "",
+        email: "",
+        phone: "",
+        updatedAt: "",
+      };
+      state.loggedIn = false;
     },
-    login_failure(){
-
-    },
-    logout(state){
-      state.user= ''
-      state.loading= false;
-      state.error='';
-    }
   },
 });
 
