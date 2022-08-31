@@ -1,12 +1,14 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import "./Hotel.css";
 import useHotel from "../../hooks/useHotel";
 import { useAppSelector } from "../../redux/hooks";
+import React, { useState } from "react";
+import Reserve from "../../components/reserve/Reserve";
 
 const Hotel = () => {
   const photos = [
@@ -30,12 +32,16 @@ const Hotel = () => {
     },
   ];
   const location = useLocation();
+  const navigate = useNavigate();
   const id = location.pathname.split("/")[2];
   const { dates, options } = useAppSelector((state) => state.searchOptions);
+  const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
   const { data, error } = useHotel(id);
-  const milisecondsPerDay = 1000 * 60 * 60 * 24;
+  const [showModal, setShowModal] = useState(false);
+
   //calculate difference (in days) between dates
   const dayDifference = (dates: string) => {
+    const milisecondsPerDay = 1000 * 60 * 60 * 24;
     let difference = 0;
     if (dates) {
       const datesArray = dates.split("to");
@@ -48,8 +54,21 @@ const Hotel = () => {
     return difference;
   };
   const days = dayDifference(dates);
+
+  const showModalHandler = () =>{
+    setShowModal(!showModal);
+  }
+
+  const reserveHandler = () => {
+    if(isLoggedIn){
+      showModalHandler();
+    }else{
+      navigate('/login');
+    }
+  };
+
   return (
-    <div>
+    <React.Fragment>
       <Navbar />
       <Header type="list" />
       {error
@@ -70,9 +89,9 @@ const Hotel = () => {
                   get a free airport taxi
                 </p>
                 <div className="hotel-imgs">
-                  {data.photos.map((photo, index) => (
+                  {photos.map((photo, index) => (
                     <div className="hotel-img-container" key={index}>
-                      <img src={photo} className="hotel-img" alt="" />
+                      <img src={photo.src} className="hotel-img" alt="" />
                     </div>
                   ))}
                 </div>
@@ -91,14 +110,19 @@ const Hotel = () => {
                       <b>${days * data.cheapestPrice * options.room}</b> ({days}
                       nights)
                     </h3>
-                    <button>Reserve or Book Now!</button>
+                    <button onClick={reserveHandler}>
+                      Reserve or Book Now!
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           )}
+      {
+        showModal && <Reserve hotelId = {id} showModalHandler={showModalHandler}/>
+      }
       <Footer />
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -37,7 +37,8 @@ const Login = () => {
         "http://localhost:8800/api/auth/login",
         credentials
       );
-      dispatch(authActions.login(res.data.details as User))
+      dispatch(authActions.login(res.data.details as User));
+      navigate('/');
     } catch (error) {
       const err = error as AxiosError;
       if (err.response) {
