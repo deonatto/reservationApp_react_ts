@@ -20,14 +20,32 @@ export interface Hotel {
   _id: number;
 }
 
-export interface User{
-  username: string,
-  city: string,
-  country:string,
-  createdAt: string,
-  email: string,
-  phone: string,
-  updatedAt:string,
+export interface User {
+  username: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  email: string;
+  phone: string;
+  updatedAt: string;
+}
+
+export interface Room {
+  createdAt: string;
+  desc: string;
+  maxPeople: number;
+  price: number;
+  title: string;
+  updatedAt: string;
+  roomNumbers: RoomNumber[];
+  __v: number;
+  _id: string;
+}
+
+interface RoomNumber {
+  number: string;
+  unavailableDates: Date[];
+  _id: string;
 }
 
 export interface ErrorResponse {
