@@ -1,0 +1,52 @@
+.reserve-container{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.418);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+}
+.reserve-wrapper{
+    background-color: white;
+    position: relative;
+    padding: 20px;
+}
+.reserve-icon{
+    top: 0;
+    left: 0;
+    position: absolute;
+    cursor: pointer;
+}
+.room-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 20px 10px;
+    font-size: 18px;
+}
+.room-info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.room-numbers-container{
+    width: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.reserve-btn{
+    border: none;
+    padding: 10px;
+    background-color: #0071c2;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+}

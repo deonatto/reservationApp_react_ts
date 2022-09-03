@@ -44,7 +44,7 @@ export interface Room {
 
 interface RoomNumber {
   number: string;
-  unavailableDates: Date[];
+  unavailableDates: string[];
   _id: string;
 }
 

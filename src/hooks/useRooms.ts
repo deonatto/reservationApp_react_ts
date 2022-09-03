@@ -13,7 +13,7 @@ export default function useRooms(hotelId:string) {
           `http://localhost:8800/api/hotels/room/${hotelId}`
         );
         setData(res.data);
-        console.log(res);
+        console.log(res.data);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           setError(err.message);
