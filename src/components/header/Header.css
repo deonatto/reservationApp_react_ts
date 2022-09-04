@@ -1,92 +1,131 @@
-.header-container{
-    padding: 0px 100px;    
+.header-container {
+  padding: 0px 100px;
+  width: 100%;
+  background-color: #003580;
+  color: white;
+  position: relative;
+}
+
+.header-icon {
+  padding-right: 5px;
+}
+.header-text {
+  margin-top: 15px;
+  font-size: 17px;
+  font-weight: bold;
+  padding-bottom: 50px;
+}
+.header-search {
+  height: 30px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 3px solid #febb02;
+  border-radius: 5px;
+  padding: 20px 0px;
+  position: absolute;
+  bottom: -25px;
+  width: calc(100% - 200px);
+}
+.header-search-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-search-text {
+  color: lightgray;
+  cursor: pointer;
+}
+.header-search-input {
+  border: none;
+  outline: none;
+}
+.header-icon {
+  color: lightgray;
+}
+.header-search-btn {
+  padding: 8px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #0071c2;
+}
+.date-picker {
+  position: absolute;
+  top: 43px;
+  z-index: 2;
+}
+.header-options {
+  width: 180px;
+  position: absolute;
+  top: 43px;
+  background-color: white;
+  color: gray;
+  box-shadow: 0px 0px 5px 3px darkgray;
+  z-index: 2;
+}
+.header-option-item {
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.header-option-text {
+  width: 40%;
+}
+.header-counter-container {
+  width: 60%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.header-counter-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  border: 1px solid #0071c2;
+}
+.header-counter-number {
+  padding: 0px 5px;
+}
+
+@media only screen and (max-width: 480px) {
+  .header-container {
+    padding: 0px 30px;
+  }
+  .header-title {
+    font-size: 20px;
+  }
+  .header-text {
+    font-size: 15px;
+  }
+  .header-search {
     width: 100%;
-    background-color: #003580;
-    color: white;
-    position: relative;
-}
-
-.header-icon{
-    padding-right: 5px;
-}
-.header-text{
-    margin-top: 15px;
-    font-size: 17px;
-    font-weight: bold;
-    padding-bottom: 50px;
-}
-.header-search{
-    height: 30px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border: 3px solid #febb02;
-    border-radius: 5px;
-    padding: 20px 0px;
-    position: absolute;
-    bottom: -25px;
-    width: calc(100% - 200px);
-}
-.header-search-item{
-    display: flex;
-    align-items: center;
-}
-.header-search-text{
-    color: lightgray;
-    cursor: pointer;
-}
-.header-search-input{
-    border: none;
-    outline: none;
-}
-.header-icon{
-    color: lightgray;
-}
-.header-search-btn{
-    padding: 8px;
-    cursor: pointer;
-    border: none;
-    color: white;
-    background-color: #0071c2;
-
-}
-.date-picker{
-    position: absolute;
-    top: 43px;
-    z-index: 2;
-}
-.header-options{
-    width: 180px;
-    position: absolute;
-    top: 43px;
-    background-color: white;
-    color: gray;
-    box-shadow: 0px 0px 5px 3px darkgray;
-    z-index: 2;
-}
-.header-option-item{
-    margin-bottom: 5px;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-.header-option-text{
-    width: 40%;
-}
-.header-counter-container{
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-.header-counter-btn{
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border: 1px solid #0071c2;
-}
-.header-counter-number{
-    padding: 0px 5px;
+    left: 0;
+  }
+  .header-search-item {
+    width: 33.3%;
+    font-size: 10px;
+  }
+  .header-search-item input {
+    font-size: 10px;
+    width: 100%;
+  }
+  .header-search-btn {
+    padding: 4px;
+    font-size: 10px;
+    justify-self: end;
+  }
+  .rdrCalendarWrapper{
+    font-size: 11px !important;
+  }
+  .date-picker {
+    font-size: 10px;
+    left: 0px;
+    right: 0;
+    margin: auto;
+    width: 298px;
+  }
 }

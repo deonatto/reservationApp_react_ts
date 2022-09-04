@@ -26,3 +26,10 @@
   bottom: 20px;
   text-align: center;
 }
+
+@media only screen and (max-width: 480px) {
+  .featured-wrapper{
+    flex-direction: column;
+    gap: 5px;
+  }
+}

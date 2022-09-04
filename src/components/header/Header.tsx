@@ -113,7 +113,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
               <FontAwesomeIcon icon={faBed} className="header-icon" />
               <input
                 type="text"
-                placeholder="where are you goin?"
+                placeholder="hotel name?"
                 className="header-search-input"
                 onChange={(e)=> setDestination(e.target.value)}
               />
