@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
-import { ErrorResponse, User } from "../../types/types";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { authActions } from "../../redux/auth";
+import { ErrorResponse } from "../../types/types";
+import { useAppSelector } from "../../redux/hooks";
+import "../login/Login.css";
 
-const Login = () => {
-  const dispatch = useAppDispatch();
+const Register = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
+    email: "",
     password: "",
+    repeatPassword: "",
   });
   const [errorMsg, setErrorMsg] = useState<string>("");
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
@@ -30,16 +30,17 @@ const Login = () => {
       setErrorMsg("");
     }, 2000);
   };
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     if (!isLoggedIn) {
       e.preventDefault();
       try {
         const res = await axios.post(
-          "http://localhost:8800/api/auth/login",
+          "http://localhost:8800/api/auth/register",
           credentials
         );
-        dispatch(authActions.login(res.data.details as User));
-        navigate("/");
+        console.log(res);
+        //navigate("/login");
       } catch (error) {
         const err = error as AxiosError;
         if (err.response) {
@@ -60,44 +61,61 @@ const Login = () => {
         }
       }
     } else {
-      navigate("/");
+      navigate("/login");
     }
   };
+
+  const passwordMatch = () => {
+    if (credentials.password !== credentials.repeatPassword) {
+      return <p style={{ color: "red" }}>Passwords don´t match</p>;
+    }
+  };
+
   return (
     <div className="login-container">
-      <h1>Login</h1>
-      <h2>
-        <Link to="/" className="link">
-          Back to Home
-        </Link>
-      </h2>
-      <div className="form-container">
+      <h1>Register</h1>
+      <form onSubmit={handleLogin} className="form-container">
         <label htmlFor="username">Username</label>
         <input
+          required
           type="text"
           placeholder="Username"
           id="username"
           onChange={handleChange}
-          className="login-form-input"
         />
+        <label htmlFor="email">Email</label>
+        <input
+          required
+          type="email"
+          placeholder="Username"
+          id="email"
+          onChange={handleChange}
+        />
+        {passwordMatch()}
         <label htmlFor="password">Password</label>
         <input
           type="password"
           placeholder="Password"
           id="password"
           onChange={handleChange}
-          className="login-form-input"
         />
-        <button onClick={handleLogin} className="login-btn">
-          Login
+        <label htmlFor="repeatPassword">Repeat Password</label>
+        <input
+          type="password"
+          placeholder="Repeat Password"
+          id="repeatPassword"
+          onChange={handleChange}
+        />
+        <button className="login-btn" type="submit">
+          Register
         </button>
-        {errorMsg && <span>{errorMsg}</span>}
-      </div>
+      </form>
       <h4>
-        Don't have an account? Go to <Link to="/register">Register</Link>
+        already have an account? Go to <Link to="/login">Login</Link>
       </h4>
+      {errorMsg && <span>{errorMsg}</span>}
     </div>
   );
 };
 
-export default Login;
+export default Register;

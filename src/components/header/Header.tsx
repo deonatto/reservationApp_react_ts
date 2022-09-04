@@ -101,28 +101,6 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
 
   return (
     <div className="header-container">
-      <ul className="categories-list">
-        <li className="category active">
-          <FontAwesomeIcon icon={faBed} className="header-icon" />
-          Stays
-        </li>
-        <li className="category">
-          <FontAwesomeIcon icon={faPlane} className="header-icon" />
-          Flights
-        </li>
-        <li className="category">
-          <FontAwesomeIcon icon={faCar} className="header-icon" />
-          Car rentals
-        </li>
-        <li className="category">
-          <FontAwesomeIcon icon={faBed} className="header-icon" />
-          Attractions
-        </li>
-        <li className="category">
-          <FontAwesomeIcon icon={faTaxi} className="header-icon" />
-          Airport taxis
-        </li>
-      </ul>
       {type !== "list" && (
         <Fragment>
           <h1 className="header-title">A lifetime of discounts? It´s Genius</h1>
@@ -130,7 +108,6 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
             Get rewarded for your travels - unlock instant savings of 10% or
             more with a free account
           </p>
-          <button className="header-btn">Sign in/Register</button>
           <div className="header-search">
             <div className="header-search-item">
               <FontAwesomeIcon icon={faBed} className="header-icon" />
