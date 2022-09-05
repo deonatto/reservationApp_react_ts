@@ -25,3 +25,16 @@
     background-color: #003580;
     color: white;
 }
+@media only screen and (max-width: 480px) {
+    .home-list-container{
+      flex-direction: column;
+      gap: 5px;
+    }
+    .home-list-item{
+        text-align: center;
+    }
+    .home-list-ratings{
+        display: flex;
+        justify-content: center;
+    }
+  }

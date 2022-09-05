@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import "./Hotels.css";
 import { Options } from "../../types/types";
@@ -29,7 +28,6 @@ const Hotels: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <Header type="list" />
       <div className="list-container">
         <div className="list-wrapper">
           <div className="list-search">

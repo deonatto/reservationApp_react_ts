@@ -1,9 +1,6 @@
 .hotel-container {
   margin-top: 20px;
   padding: 0px 25px;
-}
-.hotel-wrapper {
-  position: relative;
   width: 100%;
 }
 .hotel-address {
@@ -60,4 +57,23 @@
   padding: 10px;
   background-color: #0071c2;
   color: white;
+}
+@media only screen and (max-width: 480px) {
+  .hotel-container {
+    padding: 0px 10px;
+    font-size: 14px;
+  }
+  .hotel-title{
+    font-size: 22px;
+  }
+  .hotel-address{
+    margin-bottom: 5px;
+  }
+  .hotel-details-texts, .hotel-price{
+    flex: 2;
+    font-size: 12px;
+  }
+  .hotel-price button {
+    font-size: 11px;
+  }
 }

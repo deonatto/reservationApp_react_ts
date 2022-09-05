@@ -14,8 +14,6 @@ const Home: React.FC = () => {
         <Header/>
         <div className='home-container'>
           <Features/>
-          <h2 className='home-title'>Browse by property type</h2>
-          <PropertyList/>
           <h2 className='home-title'>Home guests love</h2>
           <HomesList />
         </div>

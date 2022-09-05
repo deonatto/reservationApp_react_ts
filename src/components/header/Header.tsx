@@ -14,17 +14,15 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import {Options} from '../../types/types';
-import { useAppDispatch} from "../../redux/hooks";
+import { Options } from "../../types/types";
+import { useAppDispatch } from "../../redux/hooks";
 import { searchOptionsActions } from "../../redux/searchOptions";
-interface HeaderProps {
-  type?: string;
-}
 
-const Header: React.FC<HeaderProps> = ({ type }) => {
+
+const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [destination, setDestination] = useState('');
+  const [destination, setDestination] = useState("");
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [optionsPickerIsOpen, setOptionsPickerIsOpen] = useState(false);
   const [optionsPicker, setOptionsPicker] = useState<Options>({
@@ -91,137 +89,141 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   };
 
   const handleSearch = () => {
-    dispatch(searchOptionsActions.newSearch({
-      city: destination, 
-      dates: formatDate(date[0].startDate, date[0].endDate), 
-      options: optionsPicker
-    }))
-    navigate("/hotels", {state:{destination, date:formatDate(date[0].startDate, date[0].endDate), optionsPicker}})
+    dispatch(
+      searchOptionsActions.newSearch({
+        city: destination,
+        dates: formatDate(date[0].startDate, date[0].endDate),
+        options: optionsPicker,
+      })
+    );
+    navigate("/hotels", {
+      state: {
+        destination,
+        date: formatDate(date[0].startDate, date[0].endDate),
+        optionsPicker,
+      },
+    });
   };
 
   return (
     <div className="header-container">
-      {type !== "list" && (
-        <Fragment>
-          <h1 className="header-title">A lifetime of discounts? It´s Genius</h1>
-          <p className="header-text">
-            Get rewarded for your travels - unlock instant savings of 10% or
-            more with a free account
-          </p>
-          <div className="header-search">
-            <div className="header-search-item">
-              <FontAwesomeIcon icon={faBed} className="header-icon" />
-              <input
-                type="text"
-                placeholder="hotel name?"
-                className="header-search-input"
-                onChange={(e)=> setDestination(e.target.value)}
-              />
-            </div>
-            <div className="header-search-item">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="header-icon"
-                onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}
-              />
-              <span className="header-search-text">
-                {formatDate(date[0].startDate, date[0].endDate)}
-              </span>
-              {datePickerIsOpen && (
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={(item) => setDate([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={date}
-                  minDate={new Date()}
-                  className="date-picker"
-                />
-              )}
-            </div>
-            <div className="header-search-item">
-              <FontAwesomeIcon icon={faPerson} className="header-icon" />
-              <span
-                className="header-search-text"
-                onClick={() => setOptionsPickerIsOpen(!optionsPickerIsOpen)}
-              >
-                {`${optionsPicker.adult} Adult - ${optionsPicker.children} Children - ${optionsPicker.room} Room`}
-              </span>
-              {optionsPickerIsOpen && (
-                <div className="header-options">
-                  <div className="header-option-item">
-                    <span className="header-option-text">Adult</span>
-                    <div className="header-counter-container">
-                      <button
-                        disabled={optionsPicker.adult < 1}
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("adult", "-")}
-                      >
-                        -
-                      </button>
-                      <span className="header-counter-number">
-                        {optionsPicker.adult}
-                      </span>
-                      <button
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("adult", "+")}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div className="header-option-item">
-                    <span className="header-option-text">Children</span>
-                    <div className="header-counter-container">
-                      <button
-                        disabled={optionsPicker.children < 1}
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("children", "-")}
-                      >
-                        -
-                      </button>
-                      <span className="header-counter-number">
-                        {optionsPicker.children}
-                      </span>
-                      <button
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("children", "+")}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div className="header-option-item">
-                    <span className="header-option-text">Room</span>
-                    <div className="header-counter-container">
-                      <button
-                        disabled={optionsPicker.room < 1}
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("room", "-")}
-                      >
-                        -
-                      </button>
-                      <span className="header-counter-number">
-                        {optionsPicker.room}
-                      </span>
-                      <button
-                        className="header-counter-btn"
-                        onClick={() => handleCounter("room", "+")}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
+      <h1 className="header-title">A lifetime of discounts? It´s Genius</h1>
+      <p className="header-text">
+        Get rewarded for your travels - unlock instant savings of 10% or more
+        with a free account
+      </p>
+      <div className="header-search">
+        <div className="header-search-item">
+          <FontAwesomeIcon icon={faBed} className="header-icon" />
+          <input
+            type="text"
+            placeholder="hotel name?"
+            className="header-search-input"
+            onChange={(e) => setDestination(e.target.value)}
+          />
+        </div>
+        <div className="header-search-item">
+          <FontAwesomeIcon
+            icon={faCalendarDays}
+            className="header-icon"
+            onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}
+          />
+          <span className="header-search-text">
+            {formatDate(date[0].startDate, date[0].endDate)}
+          </span>
+          {datePickerIsOpen && (
+            <DateRange
+              editableDateInputs={true}
+              onChange={(item) => setDate([item.selection])}
+              moveRangeOnFirstSelection={false}
+              ranges={date}
+              minDate={new Date()}
+              className="date-picker"
+            />
+          )}
+        </div>
+        <div className="header-search-item">
+          <FontAwesomeIcon icon={faPerson} className="header-icon" />
+          <span
+            className="header-search-text"
+            onClick={() => setOptionsPickerIsOpen(!optionsPickerIsOpen)}
+          >
+            {`${optionsPicker.adult} Adult - ${optionsPicker.children} Children - ${optionsPicker.room} Room`}
+          </span>
+          {optionsPickerIsOpen && (
+            <div className="header-options">
+              <div className="header-option-item">
+                <span className="header-option-text">Adult</span>
+                <div className="header-counter-container">
+                  <button
+                    disabled={optionsPicker.adult < 1}
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("adult", "-")}
+                  >
+                    -
+                  </button>
+                  <span className="header-counter-number">
+                    {optionsPicker.adult}
+                  </span>
+                  <button
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("adult", "+")}
+                  >
+                    +
+                  </button>
                 </div>
-              )}
+              </div>
+              <div className="header-option-item">
+                <span className="header-option-text">Children</span>
+                <div className="header-counter-container">
+                  <button
+                    disabled={optionsPicker.children < 1}
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("children", "-")}
+                  >
+                    -
+                  </button>
+                  <span className="header-counter-number">
+                    {optionsPicker.children}
+                  </span>
+                  <button
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("children", "+")}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className="header-option-item">
+                <span className="header-option-text">Room</span>
+                <div className="header-counter-container">
+                  <button
+                    disabled={optionsPicker.room < 1}
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("room", "-")}
+                  >
+                    -
+                  </button>
+                  <span className="header-counter-number">
+                    {optionsPicker.room}
+                  </span>
+                  <button
+                    className="header-counter-btn"
+                    onClick={() => handleCounter("room", "+")}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="header-search-item">
-              <button className="header-search-btn" onClick={handleSearch}>
-                Search
-              </button>
-            </div>
-          </div>
-        </Fragment>
-      )}
+          )}
+        </div>
+        <div className="header-search-item">
+          <button className="header-search-btn" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

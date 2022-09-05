@@ -55,72 +55,67 @@ const Hotel = () => {
   };
   const days = dayDifference(dates);
 
-  const showModalHandler = () =>{
+  const showModalHandler = () => {
     setShowModal(!showModal);
-  }
+  };
 
   const reserveHandler = () => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       showModalHandler();
-    }else{
-      navigate('/login');
+    } else {
+      navigate("/login");
     }
   };
 
   return (
     <React.Fragment>
       <Navbar />
-      <Header type="list" />
       {error
         ? error
         : data && (
             <div className="hotel-container">
-              <div className="hotel-wrapper">
-                <h1 className="hotel-title">{data.name}</h1>
-                <div className="hotel-address">
-                  <FontAwesomeIcon icon={faLocationDot} />
-                  <p>{data.address}</p>
-                </div>
-                <p className="hotel-info">
-                  Excellent location - {data.distance}m from center
-                </p>
-                <p className="hotel-info">
-                  Book a stay over ${data.cheapestPrice} at this property and
-                  get a free airport taxi
-                </p>
-                <div className="hotel-imgs">
-                  {photos.map((photo, index) => (
-                    <div className="hotel-img-container" key={index}>
-                      <img src={photo.src} className="hotel-img" alt="" />
-                    </div>
-                  ))}
-                </div>
-                <div className="hotel-details">
-                  <div className="hotel-details-texts">
-                    <h2>{data.title}</h2>
-                    <p className="hotel-desc">{data.desc}</p>
+              <h1 className="hotel-title">{data.name}</h1>
+              <div className="hotel-address">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <p>{data.address}</p>
+              </div>
+              <p className="hotel-info">
+                Excellent location - {data.distance}m from center
+              </p>
+              <p className="hotel-info">
+                Book a stay over ${data.cheapestPrice} at this property and get
+                a free airport taxi
+              </p>
+              <div className="hotel-imgs">
+                {photos.map((photo, index) => (
+                  <div className="hotel-img-container" key={index}>
+                    <img src={photo.src} className="hotel-img" alt="" />
                   </div>
-                  <div className="hotel-price">
-                    <h2>Perfect for a {days}-night stay!</h2>
-                    <p>
-                      Located in the real heart of Krakow, this property has an
-                      excellent location score of 9.8!
-                    </p>
-                    <h3>
-                      <b>${days * data.cheapestPrice * options.room}</b> ({days}
-                      nights)
-                    </h3>
-                    <button onClick={reserveHandler}>
-                      Reserve or Book Now!
-                    </button>
-                  </div>
+                ))}
+              </div>
+              <div className="hotel-details">
+                <div className="hotel-details-texts">
+                  <h2>{data.title}</h2>
+                  <p className="hotel-desc">{data.desc}</p>
+                </div>
+                <div className="hotel-price">
+                  <h2>Perfect for a {days}-night stay!</h2>
+                  <p>
+                    Located in the real heart of Krakow, this property has an
+                    excellent location score of 9.8!
+                  </p>
+                  <h3>
+                    <b>${days * data.cheapestPrice * options.room}</b> ({days}
+                    nights)
+                  </h3>
+                  <button onClick={reserveHandler}>Reserve or Book Now!</button>
                 </div>
               </div>
             </div>
           )}
-      {
-        showModal && <Reserve hotelId = {id} showModalHandler={showModalHandler}/>
-      }
+      {showModal && (
+        <Reserve hotelId={id} showModalHandler={showModalHandler} />
+      )}
       <Footer />
     </React.Fragment>
   );
