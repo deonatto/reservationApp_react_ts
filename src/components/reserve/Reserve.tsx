@@ -94,14 +94,13 @@ const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
           data.map((item) => (
             <div className="room-container" key={item._id}>
               <div className="room-info">
-                <div>
+                <p>
                   <b>{item.title}</b>
-                </div>
-                <div>{item.desc}</div>
-                <div>
+                </p>
+                <p>{item.desc}</p>
+                <p>
                   Max people: <b>{item.maxPeople}</b>
-                </div>
-                <div>Price: {item.price}$</div>
+                </p>
               </div>
               <div className="room-numbers-container">
                 {item.roomNumbers.map((roomNumber) => (

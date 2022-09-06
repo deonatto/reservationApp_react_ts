@@ -76,4 +76,10 @@
   .hotel-price button {
     font-size: 11px;
   }
+  .hotel-imgs{
+    flex-direction: column;
+  }
+  .hotel-img-container{
+    width: 100%;
+  }
 }

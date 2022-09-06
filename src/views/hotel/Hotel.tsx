@@ -1,8 +1,6 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import "./Hotel.css";
 import useHotel from "../../hooks/useHotel";
@@ -116,7 +114,6 @@ const Hotel = () => {
       {showModal && (
         <Reserve hotelId={id} showModalHandler={showModalHandler} />
       )}
-      <Footer />
     </React.Fragment>
   );
 };

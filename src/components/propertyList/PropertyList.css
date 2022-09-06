@@ -1,10 +1,7 @@
-.property-wrapper {
-  width: 100%;
-  text-align: center;
-}
 .property-container {
   width: 100%;
   padding-top: 20px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
