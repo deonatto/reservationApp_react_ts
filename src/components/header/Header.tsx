@@ -91,7 +91,6 @@ const Header: React.FC = () => {
   const handleSearch = () => {
     dispatch(
       searchOptionsActions.newSearch({
-        city: destination,
         dates: formatDate(date[0].startDate, date[0].endDate),
         options: optionsPicker,
       })
@@ -117,7 +116,7 @@ const Header: React.FC = () => {
           <FontAwesomeIcon icon={faBed} className="header-icon" />
           <input
             type="text"
-            placeholder="hotel name?"
+            placeholder="Country"
             className="header-search-input"
             onChange={(e) => setDestination(e.target.value)}
           />

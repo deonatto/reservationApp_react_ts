@@ -22,6 +22,9 @@ const Hotels: React.FC = () => {
   const [url, setUrl] = useState(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`)
   const { data, error } = useDestination(url);
 
+  const optionsHandler = () =>{
+    
+  }
   const handleClick = () =>{
     setUrl(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${min}&max=${max}`)
   }
