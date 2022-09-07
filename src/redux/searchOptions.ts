@@ -18,14 +18,11 @@ const searchOptionsSlice = createSlice({
   initialState,
   reducers: {
     newSearch(state, action: PayloadAction<SearchOptionsState>){
-      state.options = action.payload.options
+      state.options = action.payload.options;
+      state.dates = action.payload.dates;
     },
-    resetSearch(state){
-      state.options = {
-        adult: 0,
-        children: 0,
-        room: 0
-      }
+    setOptionsQuantity(state, action: PayloadAction<Options>){
+      state.options = action.payload;
     }
   },
 });

@@ -5,6 +5,8 @@ import { Options } from "../../types/types";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useDestination from "../../hooks/useDestination";
 import { useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { searchOptionsActions } from "../../redux/searchOptions";
 
 interface StateProps {
   date: string;
@@ -15,19 +17,30 @@ interface StateProps {
 const Hotels: React.FC = () => {
   const useLocationProps = useLocation().state as StateProps;
   const [destination, setDestination] = useState(useLocationProps.destination);
-  const [date, setDate] = useState(useLocationProps.date);
-  const [options, setOption] = useState(useLocationProps.optionsPicker);
-  const [min, setMin] = useState('');
-  const [max, setMax] = useState('');
-  const [url, setUrl] = useState(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`)
+  const date = useLocationProps.date;
+  const dispatch = useAppDispatch();
+  const [options, setOptions] = useState(
+    useAppSelector((state) => state.searchOptions.options)
+  );
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+  const [url, setUrl] = useState(
+    `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`
+  );
   const { data, error } = useDestination(url);
 
-  const optionsHandler = () =>{
-    
+  const optionsHandler = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    setOptions(prevState =>(
+      {...prevState, [e.target.id]: Number(e.target.value)}
+    ));
   }
-  const handleClick = () =>{
-    setUrl(`http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${min}&max=${max}`)
-  }
+
+  const handleClick = () => {
+    dispatch(searchOptionsActions.setOptionsQuantity(options));
+    setUrl(
+      `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${min}&max=${max}`
+    );
+  };
   return (
     <div>
       <Navbar />
@@ -37,7 +50,12 @@ const Hotels: React.FC = () => {
             <h2 className="list-search-title">Search</h2>
             <div className="list-search-item">
               <label htmlFor="destination">Destination</label>
-              <input type="text" id="destination" onChange={(e) => setDestination(e.target.value)} placeholder={destination} />
+              <input
+                type="text"
+                id="destination"
+                onChange={(e) => setDestination(e.target.value)}
+                placeholder={destination}
+              />
             </div>
             <div className="list-search-item">
               <label htmlFor="check-in">Check-in Date</label>
@@ -51,25 +69,56 @@ const Hotels: React.FC = () => {
                 <p className="option-text">
                   Min price <small>per night</small>
                 </p>
-                <input type="number" className="option-input" onChange={(e) => setMin(e.target.value)}/>
+                <input
+                  type="number"
+                  min="0"
+                  className="option-input"
+                  onChange={(e) => setMin(e.target.value)}
+                />
               </div>
               <div className="search-item-option">
                 <p className="option-text">
                   Max price <small>per night</small>
                 </p>
-                <input type="number" className="option-input" onChange={(e) => setMax(e.target.value)}/>
+                <input
+                  type="number"
+                  min="0"
+                  className="option-input"
+                  onChange={(e) => setMax(e.target.value)}
+                />
               </div>
               <div className="search-item-option">
                 <p className="option-text">Adults</p>
-                <input type="number" className="option-input" placeholder={String(options.adult)}/>
+                <input
+                  type="number"
+                  min="0"
+                  className="option-input"
+                  id="adult"
+                  onChange={(e) => optionsHandler(e)}
+                  placeholder={String(options.adult)}
+                />
               </div>
               <div className="search-item-option">
                 <p className="option-text">Childrens</p>
-                <input type="number" className="option-input" placeholder={String(options.children)}/>
+                <input
+                  type="number"
+                  min="0"
+                  className="option-input"
+                  id="children"
+                  onChange={(e) => optionsHandler(e)}
+                  placeholder={String(options.children)}
+                />
               </div>
               <div className="search-item-option">
                 <p className="option-text">Rooms</p>
-                <input type="number" className="option-input" placeholder={String(options.room)}/>
+                <input
+                  type="number"
+                  min="0"
+                  className="option-input"
+                  id="room"
+                  onChange={(e) => optionsHandler(e)}
+                  placeholder={String(options.room)}
+                />
               </div>
             </div>
             <button onClick={handleClick}>Seach</button>

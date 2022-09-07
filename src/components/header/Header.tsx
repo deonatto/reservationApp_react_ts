@@ -98,8 +98,7 @@ const Header: React.FC = () => {
     navigate("/hotels", {
       state: {
         destination,
-        date: formatDate(date[0].startDate, date[0].endDate),
-        optionsPicker,
+        date: formatDate(date[0].startDate, date[0].endDate)
       },
     });
   };
