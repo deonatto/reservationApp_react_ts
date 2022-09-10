@@ -1,7 +1,8 @@
 import "./HomesList.css";
 import useFavoriteHotels from "../../hooks/useFavoriteHotels";
 
-const HomesList = () => {
+const HomesList: React.FC = () => {
+  //custom hook to get list of hotels
   const { data, error } = useFavoriteHotels();
   return (
     <div className="home-list-container">

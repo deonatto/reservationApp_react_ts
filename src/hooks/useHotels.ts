@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios, { Axios, AxiosError } from "axios";
 import { Hotel } from "../types/types";
 
-export default function useDestination(url:string) {
+export default function useHotels(url:string) {
   const [data, setData] = useState<Hotel[]>([]);
   const [error, setError] = useState("");
 

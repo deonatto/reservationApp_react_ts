@@ -5,11 +5,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../../redux/auth";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
 
+  //when users clicks logout btn, dispatch logout action
   const logOutHandler = () =>{
     dispatch(authActions.logout())
   }

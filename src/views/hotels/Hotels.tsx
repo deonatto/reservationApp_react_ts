@@ -1,44 +1,54 @@
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import "./Hotels.css";
-import { Options } from "../../types/types";
 import SearchItem from "../../components/searchItem/SearchItem";
-import useDestination from "../../hooks/useDestination";
+import useHotels from "../../hooks/useHotels";
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { searchOptionsActions } from "../../redux/searchOptions";
 
-interface StateProps {
-  date: string;
-  destination: string;
-  optionsPicker: Options;
-}
-
 const Hotels: React.FC = () => {
-  const useLocationProps = useLocation().state as StateProps;
-  const [destination, setDestination] = useState(useLocationProps.destination);
-  const date = useLocationProps.date;
+  const location = useLocation();
   const dispatch = useAppDispatch();
+  //set initial value to location inserted by user in home page search bar
+  const [destination, setDestination] = useState(
+    location.pathname.split("/")[2]
+  );
+  //get date from redux state
+  const date = useAppSelector((state) => state.searchOptions.dates);
   const [options, setOptions] = useState(
     useAppSelector((state) => state.searchOptions.options)
   );
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const [url, setUrl] = useState(
     `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`
   );
-  const { data, error } = useDestination(url);
+  //custom hook to get hotels in the destination
+  const { data, error } = useHotels(url);
 
-  const optionsHandler = (e:React.ChangeEvent<HTMLInputElement>) =>{
-    setOptions(prevState =>(
-      {...prevState, [e.target.id]: Number(e.target.value)}
-    ));
-  }
+  //function to update options state
+  const optionsHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions((prevState) => ({
+      ...prevState,
+      [e.target.id]: Number(e.target.value),
+    }));
+  };
+  //function to allow only positive integers in input
+  const checkInteger = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const regex = /^[0-9"Backspace"]*$/;
+    //if input is not a number validates to true
+    if (!regex.test(e.key)) {
+      e.preventDefault();
+    }
+  };
 
-  const handleClick = () => {
+  const searchHandler = () => {
+    //dispatch action to update redux options state
     dispatch(searchOptionsActions.setOptionsQuantity(options));
+    //set new url with new data, to get new list of hotels
     setUrl(
-      `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${min}&max=${max}`
+      `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}&min=${minPrice}&max=${maxPrice}`
     );
   };
   return (
@@ -73,7 +83,8 @@ const Hotels: React.FC = () => {
                   type="number"
                   min="0"
                   className="option-input"
-                  onChange={(e) => setMin(e.target.value)}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  onKeyDown = {checkInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -84,7 +95,8 @@ const Hotels: React.FC = () => {
                   type="number"
                   min="0"
                   className="option-input"
-                  onChange={(e) => setMax(e.target.value)}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  onKeyDown = {checkInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -95,6 +107,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="adult"
                   onChange={(e) => optionsHandler(e)}
+                  onKeyDown = {checkInteger}
                   placeholder={String(options.adult)}
                 />
               </div>
@@ -106,6 +119,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="children"
                   onChange={(e) => optionsHandler(e)}
+                  onKeyDown = {checkInteger}
                   placeholder={String(options.children)}
                 />
               </div>
@@ -117,11 +131,12 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="room"
                   onChange={(e) => optionsHandler(e)}
+                  onKeyDown = {checkInteger}
                   placeholder={String(options.room)}
                 />
               </div>
             </div>
-            <button onClick={handleClick}>Seach</button>
+            <button onClick={searchHandler}>Seach</button>
           </div>
           <div className="list-result">
             {error

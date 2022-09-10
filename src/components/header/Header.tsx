@@ -3,13 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
   faCalendarDays,
-  faCar,
   faPerson,
-  faPlane,
-  faTaxi,
 } from "@fortawesome/free-solid-svg-icons";
 import { DateRange, Range } from "react-date-range";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
@@ -95,12 +92,7 @@ const Header: React.FC = () => {
         options: optionsPicker,
       })
     );
-    navigate("/hotels", {
-      state: {
-        destination,
-        date: formatDate(date[0].startDate, date[0].endDate)
-      },
-    });
+    navigate(`/hotels/${destination}`);
   };
 
   return (
