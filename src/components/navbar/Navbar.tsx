@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
 
-  //when users clicks logout btn, dispatch logout action
+  //dispatch logout action
   const logOutHandler = () =>{
     dispatch(authActions.logout())
   }
@@ -27,8 +27,8 @@ const Navbar: React.FC = () => {
           <button className="navbar-btn" onClick={logOutHandler}>Logout</button>
         ) : (
           <React.Fragment>
-            <button className="navbar-btn" onClick={()=> navigate("register")}>Register</button>
-            <button className="navbar-btn" onClick={()=> navigate("login")}>login</button>
+            <button className="navbar-btn" onClick={()=> navigate("/register")}>Register</button>
+            <button className="navbar-btn" onClick={()=> navigate("/login")}>login</button>
           </React.Fragment>
         )}
       </div>

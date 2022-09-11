@@ -12,10 +12,13 @@ interface ReserveProps {
 }
 
 const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
+  //custom hook to get rooms information
   const { data, error } = useRoom(hotelId);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const dates = useAppSelector((state) => state.searchOptions.dates);
 
+  //function to get an array of all days within range date selected by user
+  //the array is an array of numbers, the dates are converted to numbers
   const getDatesInRange = () => {
     const datesArray = dates.split("to");
     //create start and end dates
@@ -31,6 +34,7 @@ const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
     }
     return datesList;
   };
+  //array with dates selected by user
   const allDates = getDatesInRange();
 
   //check if room is available on dates selected by user
@@ -39,7 +43,7 @@ const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
       //create date with string of day
       const date = new Date(item);
       //check if unavailable date exits on days selected by user
-      allDates.includes(date.getTime());
+      return allDates.includes(date.getTime());
     });
     return !isFound;
   };
@@ -90,36 +94,45 @@ const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
         />
 
         <h3>Select your rooms:</h3>
-        {data &&
-          data.map((item) => (
-            <div className="room-container" key={item._id}>
-              <div className="room-info">
-                <p>
-                  <b>{item.title}</b>
-                </p>
-                <p>{item.desc}</p>
-                <p>
-                  Max people: <b>{item.maxPeople}</b>
-                </p>
-              </div>
-              <div className="room-numbers-container">
-                {item.roomNumbers.map((roomNumber) => (
-                  <div className="room-numbers-wrapper" key={roomNumber._id}>
-                    <label>{roomNumber.number}</label>
-                    <input
-                      type="checkbox"
-                      value={roomNumber._id}
-                      onChange={selectHandler}
-                      disabled={!isRoomAvailable(roomNumber.unavailableDates)}
-                    />
+        {error
+          ? error
+          : data &&
+            data.map((item) => (
+              <React.Fragment>
+                <div className="room-container" key={item._id}>
+                  <div className="room-info">
+                    <p>
+                      <b>{item.title}</b>
+                    </p>
+                    <p>{item.desc}</p>
+                    <p>
+                      Max people: <b>{item.maxPeople}</b>
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        <button className="reserve-btn" onClick={reserveHandler}>
-          Reserve Now!
-        </button>
+                  <div className="room-numbers-container">
+                    {item.roomNumbers.map((roomNumber) => (
+                      <div
+                        className="room-numbers-wrapper"
+                        key={roomNumber._id}
+                      >
+                        <label>{roomNumber.number}</label>
+                        <input
+                          type="checkbox"
+                          value={roomNumber._id}
+                          onChange={selectHandler}
+                          disabled={
+                            !isRoomAvailable(roomNumber.unavailableDates)
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <button className="reserve-btn" onClick={reserveHandler}>
+                  Reserve Now!
+                </button>
+              </React.Fragment>
+            ))}
       </div>
     </div>
   );

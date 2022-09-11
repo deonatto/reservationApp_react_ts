@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios, { Axios, AxiosError } from "axios";
-import { Hotel } from "../types/types";
+import axios, { AxiosError } from "axios";
+import { Hotel, ErrorResponse } from "../types/types";
 
 export default function useHotels(url:string) {
   const [data, setData] = useState<Hotel[]>([]);
@@ -13,9 +13,17 @@ export default function useHotels(url:string) {
           url
         );
         setData(res.data);
-      } catch (err: unknown) {
-        if (axios.isAxiosError(err)) {
-          setError(err.message);
+      } catch (error) {
+        const err = error as AxiosError;
+        if (err.response?.data) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          const errorResponse = err.response?.data as ErrorResponse;
+          setError(errorResponse.message);
+        }else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", err.message);
+          setError("Something went wrong");
         }
       }
     };

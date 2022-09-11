@@ -5,7 +5,7 @@ import { ErrorResponse } from "../../types/types";
 import { useAppSelector } from "../../redux/hooks";
 import "../login/Login.css";
 
-const Register = () => {
+const Register: React.FC = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
@@ -14,9 +14,10 @@ const Register = () => {
     repeatPassword: "",
   });
   const [errorMsg, setErrorMsg] = useState<string>("");
+  //get users login status
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     //need square brackets in object property to tell that this refers to dynamic key
     setCredentials((prevState) => ({
       ...prevState,
@@ -24,14 +25,15 @@ const Register = () => {
     }));
   };
 
-  const handleError = (error: string) => {
+  const errorHandler = (error: string) => {
     setErrorMsg(error);
     setTimeout(() => {
       setErrorMsg("");
     }, 2000);
   };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const registerHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    //if user is not loggedIn allow to register, else send to home page
     if (!isLoggedIn) {
       e.preventDefault();
       try {
@@ -39,29 +41,24 @@ const Register = () => {
           "http://localhost:8800/api/auth/register",
           credentials
         );
-        console.log(res);
-        //navigate("/login");
+        //send to login
+        navigate("/login");
       } catch (error) {
         const err = error as AxiosError;
-        if (err.response) {
+        if (err.response?.data) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           const errorResponse = err.response?.data as ErrorResponse;
-          handleError(errorResponse.message);
-        } else if (err.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(err.request);
-          handleError("Something went wrong");
-        } else {
+          errorHandler(errorResponse.message);
+        }else {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", err.message);
-          handleError("Something went wrong");
+          errorHandler("Something went wrong");
         }
       }
     } else {
-      navigate("/login");
+      //send to home page
+      navigate("/");
     }
   };
 
@@ -74,14 +71,14 @@ const Register = () => {
   return (
     <div className="login-container">
       <h1>Register</h1>
-      <form onSubmit={handleLogin} className="form-container">
+      <form onSubmit={registerHandler} className="form-container">
         <label htmlFor="username">Username</label>
         <input
           required
           type="text"
           placeholder="Username"
           id="username"
-          onChange={handleChange}
+          onChange={changeHandler}
         />
         <label htmlFor="email">Email</label>
         <input
@@ -89,7 +86,7 @@ const Register = () => {
           type="email"
           placeholder="Username"
           id="email"
-          onChange={handleChange}
+          onChange={changeHandler}
         />
         {passwordMatch()}
         <label htmlFor="password">Password</label>
@@ -97,14 +94,14 @@ const Register = () => {
           type="password"
           placeholder="Password"
           id="password"
-          onChange={handleChange}
+          onChange={changeHandler}
         />
         <label htmlFor="repeatPassword">Repeat Password</label>
         <input
           type="password"
           placeholder="Repeat Password"
           id="repeatPassword"
-          onChange={handleChange}
+          onChange={changeHandler}
         />
         <button className="login-btn" type="submit">
           Register

@@ -1,7 +1,7 @@
 import useProperties from "../../hooks/useProperties";
-import "./Features.css";
+import "./FavoriteDestinations.css";
 
-const Features: React.FC = () => {
+const FavoriteDestinations: React.FC = () => {
   //custom hook to get count of properties in Berlin, london and madrid
   const { data, error } = useProperties();
   return (
@@ -49,4 +49,4 @@ const Features: React.FC = () => {
   );
 };
 
-export default Features;
+export default FavoriteDestinations;

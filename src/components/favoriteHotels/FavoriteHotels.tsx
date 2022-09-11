@@ -1,7 +1,7 @@
-import "./HomesList.css";
+import "./FavoriteHotels.css";
 import useFavoriteHotels from "../../hooks/useFavoriteHotels";
 
-const HomesList: React.FC = () => {
+const FavoriteHotels: React.FC = () => {
   //custom hook to get list of hotels
   const { data, error } = useFavoriteHotels();
   return (
@@ -27,4 +27,4 @@ const HomesList: React.FC = () => {
   );
 };
 
-export default HomesList;
+export default FavoriteHotels;

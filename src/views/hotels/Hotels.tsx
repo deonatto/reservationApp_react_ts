@@ -24,7 +24,7 @@ const Hotels: React.FC = () => {
   const [url, setUrl] = useState(
     `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`
   );
-  //custom hook to get hotels in the destination
+  //custom hook to get hotels in destination
   const { data, error } = useHotels(url);
 
   //function to update options state
@@ -35,7 +35,7 @@ const Hotels: React.FC = () => {
     }));
   };
   //function to allow only positive integers in input
-  const checkInteger = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const checkPositiveInteger = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const regex = /^[0-9"Backspace"]*$/;
     //if input is not a number validates to true
     if (!regex.test(e.key)) {
@@ -84,7 +84,7 @@ const Hotels: React.FC = () => {
                   min="0"
                   className="option-input"
                   onChange={(e) => setMinPrice(e.target.value)}
-                  onKeyDown = {checkInteger}
+                  onKeyDown = {checkPositiveInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -96,7 +96,7 @@ const Hotels: React.FC = () => {
                   min="0"
                   className="option-input"
                   onChange={(e) => setMaxPrice(e.target.value)}
-                  onKeyDown = {checkInteger}
+                  onKeyDown = {checkPositiveInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -107,7 +107,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="adult"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkInteger}
+                  onKeyDown = {checkPositiveInteger}
                   placeholder={String(options.adult)}
                 />
               </div>
@@ -119,7 +119,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="children"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkInteger}
+                  onKeyDown = {checkPositiveInteger}
                   placeholder={String(options.children)}
                 />
               </div>
@@ -131,7 +131,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="room"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkInteger}
+                  onKeyDown = {checkPositiveInteger}
                   placeholder={String(options.room)}
                 />
               </div>

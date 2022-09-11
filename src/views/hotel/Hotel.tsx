@@ -8,7 +8,8 @@ import { useAppSelector } from "../../redux/hooks";
 import React, { useState } from "react";
 import Reserve from "../../components/reserve/Reserve";
 
-const Hotel = () => {
+const Hotel: React.FC = () => {
+  /*
   const photos = [
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -29,13 +30,18 @@ const Hotel = () => {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
     },
   ];
+  */
   const location = useLocation();
   const navigate = useNavigate();
+  //get id of hotel from path
   const id = location.pathname.split("/")[2];
+  // get dates from redux state
   const { dates, options } = useAppSelector((state) => state.searchOptions);
+  //get users login status
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
+  const [isModalopen, setIsModalOpen] = useState(false);
+  //custom hook to get hotel data
   const { data, error } = useHotel(id);
-  const [showModal, setShowModal] = useState(false);
 
   //calculate difference (in days) between dates
   const dayDifference = (dates: string) => {
@@ -54,10 +60,11 @@ const Hotel = () => {
   const days = dayDifference(dates);
 
   const showModalHandler = () => {
-    setShowModal(!showModal);
+    setIsModalOpen(!isModalopen);
   };
 
   const reserveHandler = () => {
+    //if user is loggedIn, show reserve screen, else send to login page
     if (isLoggedIn) {
       showModalHandler();
     } else {
@@ -85,9 +92,9 @@ const Hotel = () => {
                 a free airport taxi
               </p>
               <div className="hotel-imgs">
-                {photos.map((photo, index) => (
+                {data.photos.map((photo, index) => (
                   <div className="hotel-img-container" key={index}>
-                    <img src={photo.src} className="hotel-img" alt="" />
+                    <img src={photo} className="hotel-img" alt="" />
                   </div>
                 ))}
               </div>
@@ -111,7 +118,7 @@ const Hotel = () => {
               </div>
             </div>
           )}
-      {showModal && (
+      {isModalopen && (
         <Reserve hotelId={id} showModalHandler={showModalHandler} />
       )}
     </React.Fragment>

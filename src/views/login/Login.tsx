@@ -6,7 +6,7 @@ import { ErrorResponse, User } from "../../types/types";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { authActions } from "../../redux/auth";
 
-const Login = () => {
+const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -14,9 +14,10 @@ const Login = () => {
     password: "",
   });
   const [errorMsg, setErrorMsg] = useState<string>("");
+  //get users login status
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     //need square brackets in object property to tell that this refers to dynamic key
     setCredentials((prevState) => ({
       ...prevState,
@@ -24,13 +25,15 @@ const Login = () => {
     }));
   };
 
-  const handleError = (error: string) => {
+  const errorHandler = (error: string) => {
     setErrorMsg(error);
     setTimeout(() => {
       setErrorMsg("");
     }, 2000);
   };
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    //if user is not loggedIn allow to login, else send to home page
     if (!isLoggedIn) {
       e.preventDefault();
       try {
@@ -38,28 +41,25 @@ const Login = () => {
           "http://localhost:8800/api/auth/login",
           credentials
         );
+        //dispatch action to update redux state
         dispatch(authActions.login(res.data.details as User));
+        //send to home page
         navigate("/");
       } catch (error) {
         const err = error as AxiosError;
-        if (err.response) {
+        if (err.response?.data) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           const errorResponse = err.response?.data as ErrorResponse;
-          handleError(errorResponse.message);
-        } else if (err.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(err.request);
-          handleError("Something went wrong");
-        } else {
+          errorHandler(errorResponse.message);
+        }else {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", err.message);
-          handleError("Something went wrong");
+          errorHandler("Something went wrong");
         }
       }
     } else {
+      //send to home page
       navigate("/");
     }
   };
@@ -71,13 +71,13 @@ const Login = () => {
           Back to Home
         </Link>
       </h2>
-      <div className="form-container">
+      <form className="form-container" onSubmit={loginHandler}>
         <label htmlFor="username">Username</label>
         <input
           type="text"
           placeholder="Username"
           id="username"
-          onChange={handleChange}
+          onChange={changeHandler}
           className="login-form-input"
         />
         <label htmlFor="password">Password</label>
@@ -85,17 +85,17 @@ const Login = () => {
           type="password"
           placeholder="Password"
           id="password"
-          onChange={handleChange}
+          onChange={changeHandler}
           className="login-form-input"
         />
-        <button onClick={handleLogin} className="login-btn">
+        <button type="submit" className="login-btn">
           Login
         </button>
-        {errorMsg && <span>{errorMsg}</span>}
-      </div>
+      </form>
       <h4>
         Don't have an account? Go to <Link to="/register">Register</Link>
       </h4>
+      {errorMsg && <span>{errorMsg}</span>}
     </div>
   );
 };
