@@ -9,7 +9,7 @@
 }
 .list-search {
   max-width: 350px;
-  flex: 1;
+  width: 33.3%;
   background-color: #febb02;
   padding: 10px;
   border-radius: 10px;
@@ -32,7 +32,8 @@
   margin-bottom: 10px;
 }
 .list-result {
-  flex: 3;
+  width: calc(100% - 33%);
+  max-width: 900px;
 }
 .list-search-item {
   width: 100%;
@@ -71,21 +72,28 @@
 .option-input {
   width: 20%;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .list-container {
     padding: 0px 10px;
   }
   .list-search {
     display: none;
   }
+  .list-result {
+    width: 100%;
+  }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
   .list-container {
-    padding: 0px 30px;
+    padding: 0px 10px;
   }
 }
 @media only screen and (min-width: 1440px) {
   .list-container {
-    padding: 0px 200px;
+    padding: 0px 0px;
+  }
+  .list-wrapper{
+    justify-content: center;
+    gap: 80px;
   }
 }

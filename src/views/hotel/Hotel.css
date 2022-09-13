@@ -27,6 +27,7 @@
 }
 .hotel-img {
   width: 100%;
+  max-height: 400px;
   object-fit: cover;
 }
 .hotel-details {
@@ -58,7 +59,7 @@
   background-color: #0071c2;
   color: white;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .hotel-container {
     padding: 0px 10px;
     font-size: 14px;
@@ -81,5 +82,13 @@
   }
   .hotel-img-container{
     width: 100%;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .hotel-address, .hotel-info, .hotel-desc, .hotel-price{
+    font-size: 19px;
+  }
+  .hotel-price button{
+    font-size: 16px;
   }
 }
