@@ -9,15 +9,18 @@ interface PropertyType{
 
 export default function useTypes() {
   const [data, setData] = useState<PropertyType[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fechData = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           `http://localhost:8800/api/hotels/countByType`
         );
         setData(res.data);
+        setLoading(false);
       } catch (error) {
         const err = error as AxiosError;
         if (err.response?.data) {
@@ -30,9 +33,10 @@ export default function useTypes() {
           console.log("Error", err.message);
           setError("Something went wrong");
         }
+        setLoading(false);
       }
     };
     fechData();
   }, []);
-  return { data, error };
+  return { data, loading, error };
 }

@@ -4,15 +4,18 @@ import { Hotel, ErrorResponse } from "../types/types";
 
 export default function useHotel(id:string) {
   const [data, setData] = useState<Hotel>();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fechData = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           `http://localhost:8800/api/hotels/find/${id}`
         );
         setData(res.data);
+        setLoading(false);
       } catch (error) {
         const err = error as AxiosError;
         if (err.response?.data) {
@@ -25,9 +28,10 @@ export default function useHotel(id:string) {
           console.log("Error", err.message);
           setError("Something went wrong");
         }
+        setLoading(false);
       }
     };
     fechData();
   }, [id]);
-  return { data, error };
+  return { data, loading, error };
 }

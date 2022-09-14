@@ -4,15 +4,18 @@ import { ErrorResponse } from "../types/types";
 
 export default function useProperties() {
   const [data, setData] = useState<number[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fechData = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           `http://localhost:8800/api/hotels/countByCity?cities=berlin,madrid,london`
         );
         setData(res.data);
+        setLoading(false);
       } catch (error) {
         const err = error as AxiosError;
         if (err.response?.data) {
@@ -25,9 +28,10 @@ export default function useProperties() {
           console.log("Error", err.message);
           setError("Something went wrong");
         }
+        setLoading(false);
       }
     };
     fechData();
   }, []);
-  return { data, error };
+  return { data, loading, error };
 }

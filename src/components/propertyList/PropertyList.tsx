@@ -1,10 +1,11 @@
 import React from "react";
 import useTypes from "../../hooks/useTypes";
 import "./PropertyList.css";
+import Spinner from "../spinner/Spinner";
 
 const PropertyList: React.FC = () => {
-  //custom hook to get count of properties types 
-  const { data, error } = useTypes();
+  //custom hook to get count of properties types
+  const { data, loading, error } = useTypes();
   const images = [
     "https://cf.bstatic.com/xdata/images/xphoto/square300/57584488.webp?k=bf724e4e9b9b75480bbe7fc675460a089ba6414fe4693b83ea3fdd8e938832a6&o=",
     "https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-apartments_300/9f60235dc09a3ac3f0a93adbc901c61ecd1ce72e.jpg",
@@ -14,21 +15,21 @@ const PropertyList: React.FC = () => {
   ];
   return (
     <div className="property-container">
-      {error
-        ? error
-        : data.map((element, index) => (
-            <div className="property-item" key={index}>
-              <img
-                src={images[index]}
-                alt=""
-                className="property-img"
-              />
-              <div className="property-titles">
-                <h2>{element.type}</h2>
-                <h4>{element.count}</h4>
-              </div>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <h3>{error}</h3>
+      ) : (
+        data.map((element, index) => (
+          <div className="property-item" key={index}>
+            <img src={images[index]} alt="" className="property-img" />
+            <div className="property-titles">
+              <h2>{element.type}</h2>
+              <h4>{element.count}</h4>
             </div>
-          ))}
+          </div>
+        ))
+      )}
     </div>
   );
 };

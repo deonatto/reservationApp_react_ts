@@ -6,6 +6,7 @@ import useHotels from "../../hooks/useHotels";
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { searchOptionsActions } from "../../redux/searchOptions";
+import Spinner from "../../components/spinner/Spinner";
 
 const Hotels: React.FC = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Hotels: React.FC = () => {
     `http://localhost:8800/api/hotels?city=${destination.toLocaleLowerCase()}`
   );
   //custom hook to get hotels in destination
-  const { data, error } = useHotels(url);
+  const { data, loading, error } = useHotels(url);
 
   //function to update options state
   const optionsHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +85,7 @@ const Hotels: React.FC = () => {
                   min="0"
                   className="option-input"
                   onChange={(e) => setMinPrice(e.target.value)}
-                  onKeyDown = {checkPositiveInteger}
+                  onKeyDown={checkPositiveInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -96,7 +97,7 @@ const Hotels: React.FC = () => {
                   min="0"
                   className="option-input"
                   onChange={(e) => setMaxPrice(e.target.value)}
-                  onKeyDown = {checkPositiveInteger}
+                  onKeyDown={checkPositiveInteger}
                 />
               </div>
               <div className="search-item-option">
@@ -107,7 +108,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="adult"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkPositiveInteger}
+                  onKeyDown={checkPositiveInteger}
                   placeholder={String(options.adult)}
                 />
               </div>
@@ -119,7 +120,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="children"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkPositiveInteger}
+                  onKeyDown={checkPositiveInteger}
                   placeholder={String(options.children)}
                 />
               </div>
@@ -131,7 +132,7 @@ const Hotels: React.FC = () => {
                   className="option-input"
                   id="room"
                   onChange={(e) => optionsHandler(e)}
-                  onKeyDown = {checkPositiveInteger}
+                  onKeyDown={checkPositiveInteger}
                   placeholder={String(options.room)}
                 />
               </div>
@@ -139,9 +140,15 @@ const Hotels: React.FC = () => {
             <button onClick={searchHandler}>Seach</button>
           </div>
           <div className="list-result">
-            {error
-              ? error
-              : data.map((item) => <SearchItem key={item._id} item={item} />)}
+            {loading ? (
+              <Spinner />
+            ) : error ? (
+              <h3 style={{textAlign: "center"}}>{error}</h3>
+            ) : data.length > 0 ? (
+              data.map((item) => <SearchItem key={item._id} item={item} />)
+            ) : (
+              <h3 style={{textAlign: "center"}}>No hotels found</h3>
+            )}
           </div>
         </div>
       </div>

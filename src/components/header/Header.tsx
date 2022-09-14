@@ -85,7 +85,8 @@ const Header: React.FC = () => {
     }
   };
 
-  const searchHandler = () => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     //dispatch to update redux state
     dispatch(
       searchOptionsActions.newSearch({
@@ -104,7 +105,7 @@ const Header: React.FC = () => {
         Get rewarded for your travels - unlock instant savings of 10% or more
         with a free account
       </p>
-      <div className="header-search">
+      <form className="header-search" onSubmit={submitHandler}>
         <div className="header-search-item">
           <FontAwesomeIcon icon={faBed} className="header-icon" />
           <input
@@ -112,6 +113,7 @@ const Header: React.FC = () => {
             placeholder="Country"
             className="header-search-input"
             onChange={(e) => setDestination(e.target.value)}
+            required
           />
         </div>
         <div className="header-search-item">
@@ -211,11 +213,11 @@ const Header: React.FC = () => {
           )}
         </div>
         <div className="header-search-item">
-          <button className="header-search-btn" onClick={searchHandler}>
+          <button className="header-search-btn" type="submit">
             Search
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -1,13 +1,16 @@
 import useProperties from "../../hooks/useProperties";
 import "./FavoriteDestinations.css";
+import Spinner from "../spinner/Spinner";
 
 const FavoriteDestinations: React.FC = () => {
   //custom hook to get count of properties in Berlin, london and madrid
-  const { data, error } = useProperties();
+  const { data, loading, error } = useProperties();
   return (
     <div className="featured-container">
-      {error ? (
-        <h2>{error}</h2>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <h3>{error}</h3>
       ) : (
         <div className="featured-wrapper">
           <div className="featured-item">
