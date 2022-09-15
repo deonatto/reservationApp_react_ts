@@ -2,19 +2,18 @@ import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
-  faCalendarDays,
   faPerson,
 } from "@fortawesome/free-solid-svg-icons";
-import { DateRange, Range } from "react-date-range";
+import { Range } from "react-date-range";
 import React, { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { Options } from "../../types/types";
 import { useAppDispatch } from "../../redux/hooks";
 import { searchOptionsActions } from "../../redux/searchOptions";
-
+import Calendar from "../calendar/Calendar";
+import { format } from "date-fns";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -37,10 +36,7 @@ const Header: React.FC = () => {
   ]);
 
   //function to return formated date
-  const formatDate = (
-    startDate: Date | undefined,
-    endDate: Date | undefined
-  ): string => {
+  const formatDate = (startDate: Date | undefined, endDate: Date | undefined): string => {
     let formatedDate = "";
     if (startDate && endDate) {
       const startDateFormated = format(startDate, "MM/dd/yyyy");
@@ -49,6 +45,19 @@ const Header: React.FC = () => {
     }
     return formatedDate;
   };
+
+  //handler function to update dates 
+  const datesHandler = (item:Range[]) =>{
+    setDates((prevState)=>(
+      prevState.map(stateObj=>(
+        {...stateObj, startDate: item[0].startDate, endDate: item[0].endDate}
+      ))
+    ));
+  }
+  // handler function to show and hide calendar
+  const showDatePickerHandler = () =>{
+    setIsDatePickerOpen(!isdatePickerOpen)
+  }
 
   //update count of options (adults, childs and rooms)
   const optionsHandler = (option: string, operator: string) => {
@@ -116,26 +125,12 @@ const Header: React.FC = () => {
             required
           />
         </div>
-        <div className="header-search-item">
-          <FontAwesomeIcon
-            icon={faCalendarDays}
-            className="header-icon"
-            onClick={() => setIsDatePickerOpen(!isdatePickerOpen)}
-          />
-          <span className="header-search-text">
-            {formatDate(dates[0].startDate, dates[0].endDate)}
-          </span>
-          {isdatePickerOpen && (
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => setDates([item.selection])}
-              moveRangeOnFirstSelection={false}
-              ranges={dates}
-              minDate={new Date()}
-              className="date-picker"
-            />
-          )}
-        </div>
+        <Calendar 
+          dates={dates} 
+          isdatePickerOpen={isdatePickerOpen} 
+          showDatePickerHandler={showDatePickerHandler}
+          datesHandler={datesHandler}
+        />
         <div className="header-search-item">
           <FontAwesomeIcon icon={faPerson} className="header-icon" />
           <span
