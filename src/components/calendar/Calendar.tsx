@@ -7,11 +7,11 @@ import './Calendar.css';
 interface CalendarPros {
   isdatePickerOpen: boolean;
   dates: Range[];
-  showDatePickerHandler: () => void;
+  datePickerHandler: () => void;
   datesHandler: (item:Range[]) => void
 }
 
-const Calendar: React.FC<CalendarPros> = ({isdatePickerOpen,dates,showDatePickerHandler,datesHandler}) => {
+const Calendar: React.FC<CalendarPros> = ({isdatePickerOpen,dates,datePickerHandler,datesHandler}) => {
   //function to return formated date
   const formatDate = (startDate: Date | undefined, endDate: Date | undefined): string => {
     let formatedDate = "";
@@ -23,13 +23,13 @@ const Calendar: React.FC<CalendarPros> = ({isdatePickerOpen,dates,showDatePicker
     return formatedDate;
   };
   return (
-    <div className="header-search-item">
+    <React.Fragment>
       <FontAwesomeIcon
         icon={faCalendarDays}
         className="header-icon"
-        onClick={showDatePickerHandler}
+        onClick={datePickerHandler}
       />
-      <span className="header-search-text" onClick={showDatePickerHandler}>
+      <span className="header-search-text" onClick={datePickerHandler}>
         {formatDate(dates[0].startDate, dates[0].endDate)}
       </span>
       {isdatePickerOpen && (
@@ -42,7 +42,7 @@ const Calendar: React.FC<CalendarPros> = ({isdatePickerOpen,dates,showDatePicker
           className="date-picker"
         />
       )}
-    </div>
+    </React.Fragment>
   );
 };
 

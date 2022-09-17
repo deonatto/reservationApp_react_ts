@@ -35,41 +35,24 @@
   color: white;
   background-color: #0071c2;
 }
-.header-options {
-  width: 180px;
-  position: absolute;
-  top: 43px;
-  background-color: white;
-  color: gray;
-  box-shadow: 0px 0px 5px 3px darkgray;
-  z-index: 2;
-}
-.header-option-item {
-  margin-bottom: 5px;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.header-option-text {
-  width: 40%;
-}
-.header-counter-container {
-  width: 60%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.header-counter-btn {
-  width: 25px;
-  height: 25px;
+.header-search-text {
+  color: lightgray;
   cursor: pointer;
-  border: 1px solid #0071c2;
 }
-.header-counter-number {
-  padding: 0px 5px;
+.header-search-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33.3%;
+  font-size: 10px;
 }
-
+.header-search-item input {
+  font-size: 10px;
+}
+.header-icon {
+  color: lightgray;
+  padding-right: 5px;
+}
 @media only screen and (max-width: 480px) {
   .header-container {
     padding: 0px 30px;
@@ -93,7 +76,12 @@
     font-size: 11px !important;
   }
 }
-
+@media only screen and (min-width: 1440px) {
+  .header-search-item input,
+  .header-search-item {
+    font-size: 17px;
+  }
+}
 @media only screen and (min-width: 1440px) {
   .header-container {
     padding: 0px 200px;
