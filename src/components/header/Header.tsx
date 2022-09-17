@@ -1,9 +1,6 @@
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBed,
-  faPerson,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBed, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { Range } from "react-date-range";
 import React, { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
@@ -36,7 +33,10 @@ const Header: React.FC = () => {
   ]);
 
   //function to return formated date
-  const formatDate = (startDate: Date | undefined, endDate: Date | undefined): string => {
+  const formatDate = (
+    startDate: Date | undefined,
+    endDate: Date | undefined
+  ): string => {
     let formatedDate = "";
     if (startDate && endDate) {
       const startDateFormated = format(startDate, "MM/dd/yyyy");
@@ -46,18 +46,20 @@ const Header: React.FC = () => {
     return formatedDate;
   };
 
-  //handler function to update dates 
-  const datesHandler = (item:Range[]) =>{
-    setDates((prevState)=>(
-      prevState.map(stateObj=>(
-        {...stateObj, startDate: item[0].startDate, endDate: item[0].endDate}
-      ))
-    ));
-  }
+  //handler function to update dates
+  const datesHandler = (item: Range[]) => {
+    setDates((prevState) =>
+      prevState.map((stateObj) => ({
+        ...stateObj,
+        startDate: item[0].startDate,
+        endDate: item[0].endDate,
+      }))
+    );
+  };
   // handler function to show and hide calendar
-  const showDatePickerHandler = () =>{
-    setIsDatePickerOpen(!isdatePickerOpen)
-  }
+  const showDatePickerHandler = () => {
+    setIsDatePickerOpen(!isdatePickerOpen);
+  };
 
   //update count of options (adults, childs and rooms)
   const optionsHandler = (option: string, operator: string) => {
@@ -94,8 +96,9 @@ const Header: React.FC = () => {
     }
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log("im here");
     //dispatch to update redux state
     dispatch(
       searchOptionsActions.newSearch({
@@ -114,7 +117,7 @@ const Header: React.FC = () => {
         Get rewarded for your travels - unlock instant savings of 10% or more
         with a free account
       </p>
-      <form className="header-search" onSubmit={submitHandler}>
+      <form className="header-search">
         <div className="header-search-item">
           <FontAwesomeIcon icon={faBed} className="header-icon" />
           <input
@@ -125,9 +128,9 @@ const Header: React.FC = () => {
             required
           />
         </div>
-        <Calendar 
-          dates={dates} 
-          isdatePickerOpen={isdatePickerOpen} 
+        <Calendar
+          dates={dates}
+          isdatePickerOpen={isdatePickerOpen}
           showDatePickerHandler={showDatePickerHandler}
           datesHandler={datesHandler}
         />
@@ -151,9 +154,7 @@ const Header: React.FC = () => {
                   >
                     -
                   </button>
-                  <span className="header-counter-number">
-                    {options.adult}
-                  </span>
+                  <span className="header-counter-number">{options.adult}</span>
                   <button
                     className="header-counter-btn"
                     onClick={() => optionsHandler("adult", "+")}
@@ -193,9 +194,7 @@ const Header: React.FC = () => {
                   >
                     -
                   </button>
-                  <span className="header-counter-number">
-                    {options.room}
-                  </span>
+                  <span className="header-counter-number">{options.room}</span>
                   <button
                     className="header-counter-btn"
                     onClick={() => optionsHandler("room", "+")}
@@ -208,7 +207,7 @@ const Header: React.FC = () => {
           )}
         </div>
         <div className="header-search-item">
-          <button className="header-search-btn" type="submit">
+          <button className="header-search-btn" onClick={submitHandler}>
             Search
           </button>
         </div>

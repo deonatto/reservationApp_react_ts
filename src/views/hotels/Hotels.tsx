@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { searchOptionsActions } from "../../redux/searchOptions";
 import Spinner from "../../components/spinner/Spinner";
+import SearchTab from "../../components/searchTab/SearchTab";
 
 const Hotels: React.FC = () => {
   const location = useLocation();
@@ -35,13 +36,17 @@ const Hotels: React.FC = () => {
       [e.target.id]: Number(e.target.value),
     }));
   };
-  //function to allow only positive integers in input
-  const checkPositiveInteger = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const regex = /^[0-9"Backspace"]*$/;
-    //if input is not a number validates to true
-    if (!regex.test(e.key)) {
-      e.preventDefault();
-    }
+
+  const destinationHandler = (destination: string) => {
+    setDestination(destination);
+  };
+
+  const minPriceHandler = (minPrice: string) => {
+    setMinPrice(minPrice);
+  };
+
+  const maxPriceHandler = (maxPrice: string) => {
+    setMaxPrice(maxPrice);
   };
 
   const searchHandler = () => {
@@ -57,97 +62,25 @@ const Hotels: React.FC = () => {
       <Navbar />
       <div className="list-container">
         <div className="list-wrapper">
-          <div className="list-search">
-            <h2 className="list-search-title">Search</h2>
-            <div className="list-search-item">
-              <label htmlFor="destination">Destination</label>
-              <input
-                type="text"
-                id="destination"
-                onChange={(e) => setDestination(e.target.value)}
-                placeholder={destination}
-              />
-            </div>
-            <div className="list-search-item">
-              <label htmlFor="check-in">Check-in Date</label>
-              <p id="check-in" className="item-date">
-                {date}
-              </p>
-            </div>
-            <div className="list-search-item">
-              <h3>Options</h3>
-              <div className="search-item-option">
-                <p className="option-text">
-                  Min price <small>per night</small>
-                </p>
-                <input
-                  type="number"
-                  min="0"
-                  className="option-input"
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  onKeyDown={checkPositiveInteger}
-                />
-              </div>
-              <div className="search-item-option">
-                <p className="option-text">
-                  Max price <small>per night</small>
-                </p>
-                <input
-                  type="number"
-                  min="0"
-                  className="option-input"
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  onKeyDown={checkPositiveInteger}
-                />
-              </div>
-              <div className="search-item-option">
-                <p className="option-text">Adults</p>
-                <input
-                  type="number"
-                  min="0"
-                  className="option-input"
-                  id="adult"
-                  onChange={(e) => optionsHandler(e)}
-                  onKeyDown={checkPositiveInteger}
-                  placeholder={String(options.adult)}
-                />
-              </div>
-              <div className="search-item-option">
-                <p className="option-text">Childrens</p>
-                <input
-                  type="number"
-                  min="0"
-                  className="option-input"
-                  id="children"
-                  onChange={(e) => optionsHandler(e)}
-                  onKeyDown={checkPositiveInteger}
-                  placeholder={String(options.children)}
-                />
-              </div>
-              <div className="search-item-option">
-                <p className="option-text">Rooms</p>
-                <input
-                  type="number"
-                  min="0"
-                  className="option-input"
-                  id="room"
-                  onChange={(e) => optionsHandler(e)}
-                  onKeyDown={checkPositiveInteger}
-                  placeholder={String(options.room)}
-                />
-              </div>
-            </div>
-            <button onClick={searchHandler}>Seach</button>
-          </div>
+          <SearchTab
+            destination={destination}
+            date={date}
+            options={options}
+            destinationHandler={destinationHandler}
+            optionsHandler={optionsHandler}
+            minPriceHandler={minPriceHandler}
+            maxPriceHandler={maxPriceHandler}
+            searchHandler={searchHandler}
+          />
           <div className="list-result">
             {loading ? (
               <Spinner />
             ) : error ? (
-              <h3 style={{textAlign: "center"}}>{error}</h3>
+              <h3 style={{ textAlign: "center" }}>{error}</h3>
             ) : data.length > 0 ? (
               data.map((item) => <SearchItem key={item._id} item={item} />)
             ) : (
-              <h3 style={{textAlign: "center"}}>No hotels found</h3>
+              <h3 style={{ textAlign: "center" }}>No hotels found</h3>
             )}
           </div>
         </div>
