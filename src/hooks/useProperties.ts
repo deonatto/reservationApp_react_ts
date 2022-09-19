@@ -12,7 +12,7 @@ export default function useProperties() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:8800/api/hotels/countByCity?cities=berlin,madrid,london`
+          `https://reservationappapi-production.up.railway.app/api/hotels/countByCity?cities=berlin,madrid,london`
         );
         setData(res.data);
         setLoading(false);

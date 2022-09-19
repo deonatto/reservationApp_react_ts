@@ -28,7 +28,7 @@ const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
       <div className="search-item-details">
         <div className="search-item-rating">
           <p>Excellent</p>
-          <span>{item.rating}</span>
+          <span style={{marginLeft: '2px'}}>{item.rating}</span>
         </div>
         <div className="search-item-detail">
           <p className="search-item-price">${item.cheapestPrice}</p>

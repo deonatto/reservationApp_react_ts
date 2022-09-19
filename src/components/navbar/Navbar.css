@@ -2,7 +2,7 @@
   background-color: #003580;
   height: 90px;
   display: flex;
-  padding: 0px 100px;
+  padding: 0px 80px;
 }
 .navbar-left {
   flex: 1;
@@ -30,13 +30,13 @@
   text-decoration: none;
   color: inherit;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .navbar-container {
-    padding: 0px 10px;
+    padding: 0px 30px;
   }
   .navbar-btn {
     width: 55px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .navbar-left h1 {
     font-size: 15px;

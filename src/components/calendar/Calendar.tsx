@@ -12,7 +12,7 @@ interface CalendarPros {
 }
 
 const Calendar: React.FC<CalendarPros> = ({isdatePickerOpen,dates,datePickerHandler,datesHandler}) => {
-  //function to return formated date
+  //function to format date
   const formatDate = (startDate: Date | undefined, endDate: Date | undefined): string => {
     let formatedDate = "";
     if (startDate && endDate) {

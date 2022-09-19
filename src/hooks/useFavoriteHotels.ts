@@ -12,7 +12,7 @@ export default function useFavoriteHotels() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:8800/api/hotels?featured=true&limit=4`
+          `https://reservationappapi-production.up.railway.app/api/hotels?featured=true&limit=4`
         );
         setData(res.data);
         setLoading(false);

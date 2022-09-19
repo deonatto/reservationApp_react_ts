@@ -62,7 +62,7 @@ const Reserve: React.FC<ReserveProps> = ({ hotelId, showModalHandler }) => {
     try {
       for (const room of selectedRooms) {
         await axios.put(
-          `http://localhost:8800/api/rooms/availability/${room}`,
+          `https://reservationappapi-production.up.railway.app/api/rooms/availability/${room}`,
           {
             dates: allDates,
           }
