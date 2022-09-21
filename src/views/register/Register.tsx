@@ -38,7 +38,7 @@ const Register: React.FC = () => {
       e.preventDefault();
       try {
         await axios.post(
-          "https://reservationappapi-production.up.railway.app/api/auth/register",
+          `${process.env.REACT_APP_API_URL}/api/auth/register`,
           credentials
         );
         //send to login

@@ -10,7 +10,7 @@ export default function useRooms(hotelId:string) {
     const fechData = async () => {
       try {
         const res = await axios.get(
-          `https://reservationappapi-production.up.railway.app/api/hotels/room/${hotelId}`
+          `${process.env.REACT_APP_API_URL}/api/hotels/room/${hotelId}`
         );
         setData(res.data);
       } catch (error) {

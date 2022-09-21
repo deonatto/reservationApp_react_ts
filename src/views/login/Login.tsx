@@ -38,7 +38,7 @@ const Login: React.FC = () => {
       e.preventDefault();
       try {
         const res = await axios.post(
-          "https://reservationappapi-production.up.railway.app/api/auth/login",
+          `${process.env.REACT_APP_API_URL}/api/auth/login`,
           credentials
         );
         //dispatch action to update redux state

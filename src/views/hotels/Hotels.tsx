@@ -24,7 +24,7 @@ const Hotels: React.FC = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [url, setUrl] = useState(
-    `https://reservationappapi-production.up.railway.app/api/hotels?city=${destination.toLocaleLowerCase()}`
+    `${process.env.REACT_APP_API_URL}/api/hotels?city=${destination.toLocaleLowerCase()}`
   );
   //custom hook to get hotels in destination
   const { data, loading, error } = useHotels(url);

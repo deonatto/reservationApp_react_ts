@@ -12,7 +12,7 @@ export default function useHotel(id:string) {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://reservationappapi-production.up.railway.app/api/hotels/find/${id}`
+          `${process.env.REACT_APP_API_URL}/api/hotels/find/${id}`
         );
         setData(res.data);
         setLoading(false);

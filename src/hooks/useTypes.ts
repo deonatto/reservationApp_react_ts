@@ -17,7 +17,7 @@ export default function useTypes() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://reservationappapi-production.up.railway.app/api/hotels/countByType`
+          `${process.env.REACT_APP_API_URL}/api/hotels/countByType`
         );
         setData(res.data);
         setLoading(false);
